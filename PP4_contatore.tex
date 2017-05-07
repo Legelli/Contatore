@@ -1,0 +1,270 @@
+%======================= PREAMBOLO DICHIARAZIONI INIZIALI===============%
+\documentclass[10pt,oneside,a4paper]{article}
+
+\usepackage[latin1]{inputenc} 
+\usepackage[italian]{babel}
+\usepackage{siunitx} %Inserisce automaticamente i dati con le unità  di misura correttamente formattate del SI (utilizzo: \SI{0.82}{m^2}, in generale \SI{misura con il punto decimale}{unità  di misura})
+\sisetup{output-decimal-marker = {.}, separate-uncertainty = true, input-uncertainty-signs = \pm, detect-weight=true, detect-family=true} %per usare SI con il punto decimale
+\usepackage{listings} %Per citare codice informatico formattandolo correttamente
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{epigraph}
+\usepackage{booktabs}	%tabelle migliorate
+\usepackage{tablefootnote}	%note a piè di pagina in tabella
+\usepackage{threeparttable} %tabella con note a piè di tabella
+\usepackage{caption}	%descrizione per figure
+\captionsetup{tableposition=top,figureposition=bottom,font=small} %setup descrizione
+\usepackage{float}
+\usepackage{esvect} %vettori
+\usepackage{longtable} %tabelle lunghe
+\usepackage[dvipsnames]{xcolor}
+\definecolor{sepia}{HTML}{80002A}
+\usepackage[colorlinks=true, citecolor=black, linkcolor=sepia, urlcolor=black]{hyperref}
+
+
+
+\setcounter{section}{-1}
+
+%========= PRIMA PAGINA ===========%
+\title{\textsc{Misura della frequenza di fenomeni radioattivi e studio di un pallinometro}}
+\author{\small{G. Galbato Muscio} \and \small{L. Gravina} \and \small{L. Graziotto} \and \small{M. Rescigno}}
+\date{}
+
+\begin{document}
+	\begin{figure}
+		\centering
+		\includegraphics[scale=0.5, trim={2.8cm 8.9cm 0 9cm}, clip]{logo.png}
+	\end{figure}
+	\maketitle
+	\begin{center} 
+		\fbox{{\fontsize{12pt}{8mm}\textsc{Gruppo B2.3}}} \\
+		\vspace{1cm}
+		\begin{tabular}{ccc}
+			Esperienza di laboratorio && Consegna della relazione \\
+			\emph{\small{3 maggio 2017}} && \emph{\small{12 maggio 2017}} \\
+		\end{tabular} 
+		
+		\vspace{0.5cm}
+		
+	\end{center}
+\hrule
+\vspace{0.5cm}
+\begin{abstract}
+Utilizzando un contatore Geiger-Müller misuriamo la radioattività ambientale, quella dovuta ai raggi cosmici e la radiazione emessa da un blocco di tufo. Studiamo quindi la distribuzione delle biglie in un pallinometro fisico e in uno simulato.	
+\end{abstract}
+\newpage
+\tableofcontents %Indice
+\listoftables %Indice delle tabelle
+\listoffigures %Indice dei grafici
+\pagebreak
+\section{Convenzioni e formule}
+In questa relazione verranno usate le seguenti convenzioni:
+\begin{enumerate}
+	\item sarà usato il punto [ $.$ ] come separatore decimale;
+	\item l'approssimazione decimale della cifra $5$ sarà fatta per eccesso;
+	\item al fine di snellire la relazione e migliorarne la leggibilità, riporteremo nel corpo del documento solamente le tabelle riepilogative e alcuni grafici, e dedicheremo un'appendice finale alle tabelle e ai grafici più dettagliati; data la mole di misure effettuate con il sonar spesso saranno riportate solo le sintesi dei dati.
+\end{enumerate}
+Inoltre, si farà riferimento alle seguenti formule:
+\begin{enumerate}
+	\item media 
+	\begin{equation}\label{eq:media}
+	\bar{x} = \frac{1}{N}\sum_{i=1}^Nx_i;
+	\end{equation}
+	\item varianza
+	\begin{equation}\label{eq:varianza}
+	\sigma^2 = \frac{1}{N}\sum_{i=1}^N(x_i-\bar{x})^2;
+	\end{equation}
+	\item deviazione standard
+	\begin{equation}\label{eq:deviazione}
+	\sigma = \sqrt{\sigma^2}.
+	\end{equation}	
+\end{enumerate}
+
+%===============SCOPO E DESCRIZIONE DELL'ESPERIENZA==============%
+\section{Scopo e descrizione dell'esperienza}
+\label{sec:descrizione}
+L'evento ``osservazione di una particella radioattiva'' è descritto da una distribuzione di probabilità poissoniana; fissato un intervallo di tempo $\Delta t$, il parametro della distribuzione è $\lambda = R\Delta t$, ove $R$ indica il valore atteso del numero di conteggi per unità di tempo. La distribuzione di probabilità della variabile $x$, indicante il numero di conteggi, è data dall'equazione
+\begin{equation}\label{eq:Poisson}
+f(x\vert \mathcal{P}_{\lambda}) = \frac{\lambda^x}{x!}e^{-\lambda},
+\end{equation}
+ed ha valore atteso $\lambda$ e deviazione standard $\sqrt{\lambda}$.
+Interessandoci invece al tempo di attesa per rilevare una particella radioattiva, la probabilità che il primo conteggio avvenga dopo l'intervallo di tempo $\Delta t$ è data da
+\[
+P(T > \Delta t) = e^{-R\Delta t},
+\]
+ove il prodotto $R\Delta t$ è pari al parametro $\lambda$ della precedente distribuzione di Poisson.
+
+
+
+%================APPARATO SPERIMENTALE======================%		
+\section{Apparato Sperimentale}
+	
+\subsection{Strumenti}
+\label{subsec:strumenti}
+\begin{itemize}
+\item Contatore Geiger-Müller (Integrated Pancake Frisker - Model 26) [superficie sensibile: \SI{15}{cm^2}];
+\item Livella digitale [digit: \SI{1}{°}];
+\item Software \emph{Palli2000} che simula il pallinometro.
+\end{itemize}
+
+\subsection{Materiali}
+\begin{itemize}
+\item Blocco di tufo;
+\item Pallinometro fisico [33 file di chiodi, 34 cellette].
+\end{itemize}
+
+
+%==================SEQUENZA OPERAZIONI SPERIMENTALI==========
+\section{Sequenza Operazioni Sperimentali} 
+
+\subsection{Misura dei conteggi per unità di tempo con un contatore Geiger-Müller}
+\subsubsection{Misura dei conteggi per unità di tempo del fondo}
+Utilizziamo il contatore Geiger-Müller in modalità \textbf{scaler}, in cui si acquisisce il numero di conteggi di particelle radioattive che attraversano il rilevatore per un fissato intervallo di tempo $\Delta t$. Posizioniamo il contatore sul tavolo in orizzontale, ad una distanza superiore ai \SI{70}{cm} dal blocco di tufo. Ripetiamo per $50$ volte la misura del numero di conteggi per intervalli di tempo $\Delta t$ pari a: $\Delta t_1 = \SI{1}{s}$, $\Delta t_2 = \SI{2}{s}$, $\Delta t_3 = \SI{3}{s}$, $\Delta t_4 = \SI{4}{s}$, $\Delta t_5 = \SI{10}{s}$.
+
+Il numero di conteggi per i diversi intervalli di tempo è riportato in tabella~\ref{tab:conteggi_tempo} e negli istogrammi di figura~\ref{fig:istogramma_deltat1}, \ref{fig:istogramma_deltat2}, \ref{fig:istogramma_deltat3}, \ref{fig:istogramma_deltat4} e \ref{fig:istogramma_deltat5}.
+
+Per quanto detto nella sezione~\ref{sec:descrizione}, stimiamo i parametri $\lambda_i$ della distribuzione di Poisson relativa ai diversi intervalli temporali calcolando il valor medio del numero di conteggi acquisiti per i diversi $\Delta t_i$. A tali stime associamo come incertezza la deviazione standard della media, la deviazione standard divisa per $\sqrt{50}$. Riportiamo le stime di $\lambda_i$ in tabella~\ref{tab:lambda_conteggi}.
+
+\begin{table}[ht]
+\caption{Stime dei parametri $\lambda$ della distribuzione di Poisson}
+\label{tab:lambda_conteggi}
+\centering
+\begin{tabular}{ccc}
+\toprule
+Intervallo & $\lambda$ & $\sigma_{\lambda}$ \\
+\hline 
+$\Delta t_1$ & 0.80  & 0.02 \\ 
+$\Delta t_2$ & 1.94  & 0.03 \\
+$\Delta t_3$ & 3.34  & 0.04 \\
+$\Delta t_4$ & 3.72  & 0.04 \\
+$\Delta t_5$ & 10.64 & 0.07 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Sovrapponendo a ciascun istogramma l'andamento atteso per una distribuzione di Poisson con parametro $\lambda_i$ notiamo che entro le barre di incertezza i dati sono compatibili.%___________________________> DA COMMENTARE
+
+Escludendo il set di dati relativo a $\Delta t_5$, calcoliamo la frazione di $0$ conteggi e di $0$ o $1$ conteggio, riportata in tabella~\ref{tab:0e01conteggi}. Introduciamo il parametro $\tau = 1/R$ indicante la previsione del tempo di attesa prima che si verifichi il primo conteggio. Per quanto riguarda la prima frazione, essa ci permette di stimare l'andamento della probabilità che il primo conteggio si verifichi dopo un intervallo di tempo $\Delta t$, ed equivale alla differenza tra $1$ e la funzione di ripartizione del tempo di attesa per un conteggio, ossia
+\[
+F(\Delta t) = e^{-\frac{\Delta t}{\tau}} = e^{-\lambda}.
+\]
+Sovrapponiamo dunque al grafico delle frazioni di $0$ conteggi in funzione di $\Delta t$ l'andamento aspettato previsto dalla distribuzione esponenziale dei tempi di attesa, descritto dalla equazione precedente.
+
+Per quanto riguarda invece la seconda frazione, essa corrisponde alla distribuzione del tempo di attesa per il secondo conteggio, ossia alla probabilità di osservare $0$ o $1$ conteggio nell'intervallo di tempo $\Delta t$. La funzione che descrive questa probabilità è
+\[
+G(\Delta t) = e^{-\frac{\Delta t}{\tau}} + \frac{\Delta t}{\tau} e^{-\frac{\Delta t}{\tau}}.
+\]%_____________________________________>DA COMPLETARE
+
+\begin{table}[ht]
+\caption{Frazione di $0$ e di $0+1$ conteggi negli intervalli tra $1$ e \SI{4}{s}}
+\label{tab:0e01conteggi}
+\centering
+\begin{tabular}{ccc}
+\toprule
+Intervallo & Frazione di 0 conteggi & Frazione di 0 e di 1 conteggi \\
+\hline 
+$\Delta t_1$ & 0.42  & 0.84 \\ 
+$\Delta t_2$ & 0.12  & 0.42 \\
+$\Delta t_3$ & 0.02  & 0.14 \\
+$\Delta t_4$ & 0.02  & 0.06 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Misura dei conteggi per unità di tempo del fondo e del blocco di tufo}
+Utilizzando ancora il contatore Geiger-Müller in modalità \textbf{scaler}, acquisiamo i conteggi per un intervallo di tempo di $\Delta t = \SI{600}{s}$, ponendolo prima orizzontale e lontano dal blocco di tufo, quindi verticale, ossia inclinato su un fianco, infine appoggiato sul blocco di tufo. I conteggi misurati sono riportati in tabella~\ref{tab:conteggi600s}.
+
+\begin{table}[ht]
+\caption{Conteggi acquisiti in un intervallo temporale di \SI{600}{s}}
+\label{tab:conteggi600s}
+\centering
+\begin{tabular}{ccc}
+\toprule
+Contatore orizzontale & Contatore verticale & Contatore sul blocco di tufo \\
+\hline 
+646 & 588 & 1395 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Pallinometro}
+\subsubsection{Pallinometro fisico}
+
+
+\subsubsection{Pallinometro simulato}
+
+
+\section{Considerazioni finali}
+
+
+\pagebreak
+%=================APPENDICE==================================
+\section{Appendice: tabelle e grafici}
+
+\begin{table}[ht]
+\caption{Numero di conteggi fissato l'intervallo di tempo}
+\label{tab:conteggi_tempo}
+\centering
+\begin{tabular}{rrrrrr}
+  \hline
+ Intervallo & $\Delta t_1$ & $\Delta t_2$ & $\Delta t_3$ & $\Delta t_4$ & $\Delta t_5$ \\ 
+  \hline
+ &   1 &   2 &   3 &   0 &   5 \\ 
+ &   1 &   1 &   4 &   5 &  13 \\ 
+ &   1 &   2 &   3 &   6 &   7 \\ 
+   &   0 &   3 &   1 &   3 &  10 \\ 
+  5 &   1 &   2 &   3 &   2 &   9 \\ 
+   &   0 &   2 &   4 &   4 &   4 \\ 
+   &   0 &   1 &   3 &   3 &  18 \\ 
+   &   1 &   2 &   3 &   3 &   9 \\ 
+   &   0 &   2 &   4 &   2 &   9 \\ 
+  10 &   0 &   2 &   2 &   4 &  14 \\ 
+   &   1 &   4 &   7 &   6 &   9 \\ 
+   &   1 &   2 &   5 &   2 &   8 \\ 
+   &   1 &   3 &   7 &   3 &  11 \\ 
+   &   3 &   5 &   1 &   4 &  12 \\ 
+  15 &   0 &   0 &   2 &   3 &  10 \\ 
+  &   1 &   1 &   3 &   2 &  13 \\ 
+  &   0 &   1 &   3 &   5 &  10 \\ 
+  &   2 &   1 &   6 &   3 &   9 \\ 
+   &   1 &   0 &   2 &   6 &  10 \\ 
+  20 &   0 &   3 &   3 &   3 &  13 \\ 
+   &   0 &   3 &   5 &   3 &  17 \\ 
+   &   0 &   3 &   7 &   3 &  11 \\ 
+   &   2 &   0 &   2 &   4 &  11 \\ 
+   &   3 &   2 &   5 &   6 &   7 \\ 
+  25 &   3 &   4 &   5 &   5 &  16 \\ 
+   &   0 &   1 &   3 &   4 &  15 \\ 
+   &   0 &   2 &   1 &   2 &   7 \\ 
+   &   0 &   0 &   4 &   6 &  11 \\ 
+   &   1 &   3 &   2 &   4 &  17 \\ 
+  30 &   1 &   1 &   2 &   2 &  12 \\ 
+   &   0 &   4 &   1 &   3 &  11 \\ 
+   &   2 &   1 &   6 &   1 &  12 \\ 
+   &   1 &   2 &   2 &   4 &   6 \\ 
+   &   1 &   4 &   4 &   4 &   4 \\ 
+  35 &   1 &   0 &   4 &   6 &  10 \\ 
+   &   1 &   3 &   2 &   4 &  13 \\ 
+   &   0 &   1 &   1 &   8 &   9 \\ 
+   &   2 &   1 &   6 &   8 &   9 \\ 
+   &   1 &   1 &   5 &   3 &  14 \\ 
+  40 &   2 &   0 &   5 &   6 &  11 \\ 
+   &   0 &   1 &   2 &   2 &  14 \\ 
+   &   1 &   1 &   2 &   1 &   9 \\ 
+  &   0 &   3 &   2 &   2 &  10 \\ 
+   &   0 &   4 &   4 &   5 &  14 \\ 
+  45 &   1 &   3 &   0 &   4 &  10 \\ 
+   &   0 &   1 &   2 &   6 &  11 \\ 
+   &   1 &   3 &   1 &   2 &  10 \\ 
+   &   1 &   2 &   6 &   5 &   6 \\ 
+   &   0 &   1 &   2 &   2 &  11 \\ 
+  50 &   0 &   3 &   5 &   2 &  11 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+
+
+
+\end{document}
