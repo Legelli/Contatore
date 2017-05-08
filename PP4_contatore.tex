@@ -21,7 +21,7 @@
 \usepackage[dvipsnames]{xcolor}
 \definecolor{sepia}{HTML}{80002A}
 \usepackage[colorlinks=true, citecolor=black, linkcolor=sepia, urlcolor=black]{hyperref}
-
+\usepackage{mathrsfs}
 
 
 \setcounter{section}{-1}
@@ -63,7 +63,7 @@ In questa relazione verranno usate le seguenti convenzioni:
 \begin{enumerate}
 	\item sarà usato il punto [ $.$ ] come separatore decimale;
 	\item l'approssimazione decimale della cifra $5$ sarà fatta per eccesso;
-	\item al fine di snellire la relazione e migliorarne la leggibilità, riporteremo nel corpo del documento solamente le tabelle riepilogative e alcuni grafici, e dedicheremo un'appendice finale alle tabelle e ai grafici più dettagliati; data la mole di misure effettuate con il sonar spesso saranno riportate solo le sintesi dei dati.
+	\item al fine di snellire la relazione e migliorarne la leggibilità, riporteremo nel corpo del documento solamente le tabelle riepilogative e alcuni grafici, e dedicheremo un'appendice finale alle tabelle e ai grafici più dettagliati.
 \end{enumerate}
 Inoltre, si farà riferimento alle seguenti formule:
 \begin{enumerate}
@@ -95,8 +95,6 @@ P(T > \Delta t) = e^{-R\Delta t},
 \]
 ove il prodotto $R\Delta t$ è pari al parametro $\lambda$ della precedente distribuzione di Poisson.
 
-
-
 %================APPARATO SPERIMENTALE======================%		
 \section{Apparato Sperimentale}
 	
@@ -111,7 +109,7 @@ ove il prodotto $R\Delta t$ è pari al parametro $\lambda$ della precedente distr
 \subsection{Materiali}
 \begin{itemize}
 \item Blocco di tufo;
-\item Pallinometro fisico [33 file di chiodi, 34 cellette].
+\item Pallinometro fisico [33 file di chiodi, 34 bin].
 \end{itemize}
 
 
@@ -189,8 +187,51 @@ Contatore orizzontale & Contatore verticale & Contatore sul blocco di tufo \\
 \end{table}
 
 \subsection{Pallinometro}
+\begin{figure}[h]
+\centering
+\includegraphics{pallinometro.png}
+\caption{Schematizzazione della quinconce di Galton (evidentemente malfunzionante)}
+\label{fig:pallinometro}
+\end{figure}
+Supponiamo di lasciar cadere una sfera ideale di massa non nulla in uno strumento (anch'esso ideale) come quello in figura \ref{fig:pallinometro}: per ogni riga la sfera urterà perfettamente verticale un chiodo (punti verdi della figura) e cadrà con uguale probabilità a destra o a sinistra terminando la caduta in una delle colonne sul fondo dello strumento; supponiamo quindi di ripetere l'esperienza $N$ volte: è di interesse discutere la modalità con cui le $N$ sfere si distribuiranno nelle colonne. Lo strumento appena descritto è chiamato (a seguito del suo ideatore) \emph ``quinconce di Galton"\footnote{Per ``quinconce'' si intende il simbolo usato dai Romani per indicare la frazione $5/12$, simbolo che ricorda la disposizione dei chiodi dello strumento; volgarmente quest'ultimo è ricordato come ``pallinometro''.} ed ha le seguenti caratteristiche:
+\begin{itemize}
+	\item ogni collisione (da ora in poi chiamata \emph{evento}) ha esclusivamente due modalità di manifestarsi, in quanto la pallina cade o a sinistra o a destra;
+	\item il numero di eventi è discreto e finito, essendoci un evento per ogni riga\footnote{La distanza tra due righe è scelta appositamente affinché avvenga questo.};
+	\item la probabilità che la pallina cada a destra o a sinistra è esattamente identica\footnote{Ricordando che si tratta di un \emph{gedankenexperiment}.} per ogni chiodo e rimane costante nel tempo.
+\end{itemize} Nel complesso, l'esperimento concettuale appena proposto è completamente compatibile con un \emph{procedimento di Bernoulli} e l'esito dell'esperimento è descritto da una distribuzione binomiale\footnote{In realtà, la successione logica con la quale sono stati presentati gli argomenti di questa sezione è stata invertita: storicamente, Galton ha ideato questa esperienza proprio per valutare l'efficacia della distribuzione binomiale, la quinconce non ha altro scopo.}: intendendo con $p$ la probabilità di successo (la scelta di cosa definire \emph{successo} è arbitraria) e con $C$ il numero di eventi ($C$ sta per \emph{collisioni}), che nel caso della quinconce corrisponde, se ben progettata, al numero di righe, si ha che la probabilità che una pallina cada nell'$i$-esimo bin è 
+\begin{align}\label{eq:prob_palli}
+	P(i) &= \left(\begin{array}{c} C \\ i \end{array}\right) p^C \notag \\ 
+		&= \frac{C!}{i!  \left(C - i\right) !} p^C,
+\end{align}
+dalla quale è semplice ricavare il valore atteso di sfere che al termine degli $N$ lanci occuperanno l'$i$-esimo bin:
+\begin{align}\label{eq:E_palli}
+	\vec{E}(i,N) &= N \cdot P(i) \notag \\  
+		&= N \frac{C!}{i!  \left(C - i\right) !} p^C,
+\end{align}
+accompagnato da una deviazione standard pari a 
+\begin{align}\label{eq:sigma_palli}
+	\vec{\sigma}(i, N) &= \sqrt{P(i)N\bar{P}(i)} \notag \\ %Mi piace quest'ordine perché mi ricorda una relazione di coniugio tra matrici =)
+				   &= \sqrt{\frac{C!}{i!  \left(C - i\right) !} p^C N \left(1 - \frac{C!}{i!  \left(C - i\right) !} p^C \right)},
+\end{align}
+dove si è usata la notazione $\bar{P}(i)$ per indicare la probabilità che la pallina cada in uno qualsiasi degli altri bin. È bene chiarire che l'indice $i$ si conta a partire dal primo bin raggiungibile dalle sfere (e che quindi dipende dall'altezza dalla quale si lasciano cadere).
 \subsubsection{Pallinometro fisico}
+Inclinando leggermente il pallinometro e avendo cura di non inclinarlo lateralmente\footnote{La posizione orizzontale dell'apparato è stata controllata verificando che le altezze di due vertici lungo i due lati fossero uguali.} si sono lasciate cadere $N = 200$ sfere di metallo dal punto più alto, le quali hanno colliso con $C_1 = 33$ chiodi prima di distribuirsi nei vari bin; ripetendo l'esperienza variando la distanza dalla base da cui lasciar cadere le palline, si sono fatte collidere le sfere prima con $C_2 = 25$ e poi con $C_3 = 17$ chiodi, riportiamo in tabella \ref{tab:palli_orizzontale} il numero di sfere accumulatosi in ciascun bin al termine di ciascuna esperienza.
 
+Utilizzando nell'equazione (\ref{eq:E_palli}) come valore atteso $E(i)$ il numero di sfere contenute nell'$i$-esimo bin ricaviamo la probabilità di successo (come detto è arbitrario, da ora in poi considereremo come successo l'evento \emph{cadere verso destra})\footnote{Nel caso avessimo scelto come successo l'evento \emph{cadere verso sinistra} avremmo dovuto contare i bin a partire da destra.} calcolandola per ogni bin con 10 o più sfere, in modo da avere rilevanza statistica, e facendone poi la media; si ottengono i valori:
+\begin{align*}
+	C_1 = 33 &\longrightarrow \overline{p_1} = 0.50 \\ %Prima di fare i conti voglio confrontarmi con voi (per la prima li ho fatti tutti)
+	C_2 = 25 &\longrightarrow \overline{p_2} = ?? \\
+	C_3 = 17 &\longrightarrow \overline{p_3} = ??.
+\end{align*}
+Per confrontare i dati con le distribuzioni binomiali che teoricamente dovrebbero descrivere gli eventi, \emph{normalizziamo} i risultati dividendo ogni conteggio per il numero di sfere complessive, in modo da ottenere per ogni bin una percentuale relativa che è, per definizione, equivalente a quella di (\ref{eq:prob_palli}). Riportiamo nei grafici \ref{fig:palli_orizzontale_33}, \ref{fig:palli_orizzontale_25} e \ref{fig:palli_orizzontale_17} le distribuzioni delle percentuali relative confrontate con le equivalenti distribuzioni binomiali del tipo $\mathscr{B}_{i_j, p_j}$ dove con $i_j$ si è indicato l'indice dell'ultimo bin raggiungibile ($i_j = (C_j+1)$).
+
+Inclinando leggermente verso destra la quinconce e ripetendo le misure si ottengono i risultati riportati nella tabella \ref{tab:palli_inclinato}, normalizzandoli e confrontandoli con quelli teorici previste dalle binomiali del tipo $\mathscr{B}_{i_k, p_k}$ si ottengono i grafici \ref{fig:palli_inclinato_33}, \ref{fig:palli_inclinato_25} e \ref{fig:palli_inclinato_17}, dove le probabilità $p_k$ sono ottenute con lo stesso procedimento illustrato sopra, e valgono:
+\begin{align*}
+	& \overline{p_1} \approx 0.55 \\ %Prima di fare i conti voglio confrontarmi con voi (ho usato una sola probabilità)
+	& \overline{p_2} = ?? \\
+	& \overline{p_3} = ??.
+\end{align*}
+Come ragionevolmente previsto, la distribuzione è leggermente spostata verso destra.
 
 \subsubsection{Pallinometro simulato}
 
