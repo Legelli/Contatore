@@ -197,42 +197,46 @@ Supponiamo di lasciar cadere una sfera ideale di massa non nulla in uno strument
 \begin{itemize}
 	\item ogni collisione (da ora in poi chiamata \emph{evento}) ha esclusivamente due modalità di manifestarsi, in quanto la pallina cade o a sinistra o a destra;
 	\item il numero di eventi è discreto e finito, essendoci un evento per ogni riga\footnote{La distanza tra due righe è scelta appositamente affinché avvenga questo.};
-	\item la probabilità che la pallina cada a destra o a sinistra è esattamente identica\footnote{Ricordando che si tratta di un \emph{gedankenexperiment}.} per ogni chiodo e rimane costante nel tempo.
-\end{itemize} Nel complesso, l'esperimento concettuale appena proposto è completamente compatibile con un \emph{procedimento di Bernoulli} e l'esito dell'esperimento è descritto da una distribuzione binomiale\footnote{In realtà, la successione logica con la quale sono stati presentati gli argomenti di questa sezione è stata invertita: storicamente, Galton ha ideato questa esperienza proprio per valutare l'efficacia della distribuzione binomiale, la quinconce non ha altro scopo.}: intendendo con $p$ la probabilità di successo (la scelta di cosa definire \emph{successo} è arbitraria) e con $C$ il numero di eventi ($C$ sta per \emph{collisioni}), che nel caso della quinconce corrisponde, se ben progettata, al numero di righe, si ha che la probabilità che una pallina cada nell'$i$-esimo bin è 
-\begin{align}\label{eq:prob_palli}
-	P(i) &= \left(\begin{array}{c} C \\ i \end{array}\right) p^C \notag \\ 
-		&= \frac{C!}{i!  \left(C - i\right) !} p^C,
+	\item la probabilità che la pallina cada a destra (o a sinistra) è esattamente identica\footnote{Ricordando che si tratta di un \emph{gedankenexperiment}.} per ogni chiodo e rimane costante nel tempo.
+\end{itemize} Nel complesso, l'esperimento concettuale appena proposto è completamente compatibile con un \emph{procedimento di Bernoulli} e l'esito dell'esperimento è descritto da una distribuzione binomiale\footnote{In realtà, la successione logica con la quale sono stati presentati gli argomenti di questa sezione è stata invertita: storicamente, Galton ha ideato questa esperienza proprio per valutare l'efficacia della distribuzione binomiale, la quinconce non ha altro scopo.}: ci aspettiamo, infatti, di trovare nell'$i-$esimo bin un numero di sfere pari circa a 
+\begin{align}\label{eq:palli_E}
+	\vec{E}(i, N, C) &= P(i) \cdot N \notag \\
+		&= \begin{pmatrix} C+1 \\ i \end{pmatrix} p^i (1-p)^{C+1-i}N
 \end{align}
-dalla quale è semplice ricavare il valore atteso di sfere che al termine degli $N$ lanci occuperanno l'$i$-esimo bin:
-\begin{align}\label{eq:E_palli}
-	\vec{E}(i,N) &= N \cdot P(i) \notag \\  
-		&= N \frac{C!}{i!  \left(C - i\right) !} p^C,
-\end{align}
-accompagnato da una deviazione standard pari a 
-\begin{align}\label{eq:sigma_palli}
-	\vec{\sigma}(i, N) &= \sqrt{P(i)N\bar{P}(i)} \notag \\ %Mi piace quest'ordine perché mi ricorda una relazione di coniugio tra matrici =)
-				   &= \sqrt{\frac{C!}{i!  \left(C - i\right) !} p^C N \left(1 - \frac{C!}{i!  \left(C - i\right) !} p^C \right)},
-\end{align}
-dove si è usata la notazione $\bar{P}(i)$ per indicare la probabilità che la pallina cada in uno qualsiasi degli altri bin. È bene chiarire che l'indice $i$ si conta a partire dal primo bin raggiungibile dalle sfere (e che quindi dipende dall'altezza dalla quale si lasciano cadere).
-\subsubsection{Pallinometro fisico}
-Inclinando leggermente il pallinometro e avendo cura di non inclinarlo lateralmente\footnote{La posizione orizzontale dell'apparato è stata controllata verificando che le altezze di due vertici lungo i due lati fossero uguali.} si sono lasciate cadere $N = 200$ sfere di metallo dal punto più alto, le quali hanno colliso con $C_1 = 33$ chiodi prima di distribuirsi nei vari bin; ripetendo l'esperienza variando la distanza dalla base da cui lasciar cadere le palline, si sono fatte collidere le sfere prima con $C_2 = 25$ e poi con $C_3 = 17$ chiodi, riportiamo in tabella \ref{tab:palli_orizzontale} il numero di sfere accumulatosi in ciascun bin al termine di ciascuna esperienza.
+dove $N$ è il numero di palline lasciate cadere e $C$ il numero di collisioni prima di fermarsi (che corrisponde al numero di righe). 
 
-Utilizzando nell'equazione (\ref{eq:E_palli}) come valore atteso $E(i)$ il numero di sfere contenute nell'$i$-esimo bin ricaviamo la probabilità di successo (come detto è arbitrario, da ora in poi considereremo come successo l'evento \emph{cadere verso destra})\footnote{Nel caso avessimo scelto come successo l'evento \emph{cadere verso sinistra} avremmo dovuto contare i bin a partire da destra.} calcolandola per ogni bin con 10 o più sfere, in modo da avere rilevanza statistica, e facendone poi la media; si ottengono i valori:
+Nel caso di una quinconce ideale, la probabilità di cadere da una delle due parti è esattamente \SI{0.5} il che rende assolutamente equivalente la scelta di quale delle due direzioni definire \emph{successo}; in quel caso l'equazione (\ref{eq:palli_E}) si semplifica in
+\begin{equation}\label{eq:palli_E_teorico}
+	\vec{E}(i, N, C) = \begin{pmatrix} C+1 \\ i \end{pmatrix} \left(\frac{1}{2}\right)^{C+1}.
+\end{equation}
+
+Supponendo realisticamente invece che la probabilità non sia equivalente (per via di eventuali inclinazioni, per esempio) si avrà una distribuzione non simmetrica descritta da una binomiale $\mathscr{B}_{N, p}$ dove la probabilità è il valore atteso della distribuzione delle frequenze relative, cioé
+\begin{equation}\label{eq:palli_P_vero}
+	 p = \frac{1}{C} \sum_{x=0}^{C} x \frac{N_x}{N}
+\end{equation} dove con $N_x$ si è inteso il numero di palline registrate nell'$x-$esimo bin (contandoli a partire dal primo teoricamente raggiungibile).
+
+\subsubsection{Pallinometro fisico}
+Inclinando leggermente in verticale il pallinometro e avendo cura di non inclinarlo lateralmente\footnote{La posizione orizzontale dell'apparato è stata controllata verificando che le altezze di due vertici lungo i due lati fossero uguali.} si sono lasciate cadere $N = 200$ sfere di metallo dal punto più alto, le quali hanno colliso con $C_1 = 33$ chiodi prima di distribuirsi nei vari bin; ripetendo l'esperienza variando la distanza dalla base da cui lasciar cadere le palline, si sono fatte collidere le sfere prima con $C_2 = 25$ e poi con $C_3 = 17$ chiodi, riportiamo in tabella \ref{tab:palli_orizzontale} il numero di sfere accumulatosi in ciascun bin al termine di ciascuna esperienza.
+
+Utilizzando nell'equazione (\ref{eq:palli_P_vero}) ricaviamo la probabilità di successo (come detto, cosa definire \emph{successo} è arbitrario, da ora in poi considereremo come successo l'evento \emph{cadere verso destra})\footnote{Nel caso avessimo scelto come successo l'evento \emph{cadere verso sinistra} avremmo dovuto contare i bin a partire da destra.} calcolandola per ogni esperienza, si ottengono i valori:
 \begin{align*}
-	C_1 = 33 &\longrightarrow \overline{p_1} = 0.50 \\ %Prima di fare i conti voglio confrontarmi con voi (per la prima li ho fatti tutti)
-	C_2 = 25 &\longrightarrow \overline{p_2} = ?? \\
-	C_3 = 17 &\longrightarrow \overline{p_3} = ??.
+	C_1 = 33 &\longrightarrow \overline{p_1} = \SI{0.44 \pm 0.12}{} \\ %Prima di fare i conti voglio confrontarmi con voi (per la prima li ho fatti tutti)
+	C_2 = 25 &\longrightarrow \overline{p_2} = \SI{0.42 \pm 0.15}{} \\
+	C_3 = 17 &\longrightarrow \overline{p_3} = \SI{0.46 \pm 0.16}{},
 \end{align*}
-Per confrontare i dati con le distribuzioni binomiali che teoricamente dovrebbero descrivere gli eventi, \emph{normalizziamo} i risultati dividendo ogni conteggio per il numero di sfere complessive, in modo da ottenere per ogni bin una percentuale relativa che è, per definizione, equivalente a quella di (\ref{eq:prob_palli}). Riportiamo nei grafici \ref{fig:palli_orizzontale_33}, \ref{fig:palli_orizzontale_25} e \ref{fig:palli_orizzontale_17} le distribuzioni delle percentuali relative confrontate con le equivalenti distribuzioni binomiali del tipo $\mathscr{B}_{i_j, p_j}$ dove con $i_j$ si è indicato l'indice dell'ultimo bin raggiungibile ($i_j = (C_j+1)$).
+dove la deviazione standard è stata calcolata come valore atteso della distribuzione dei quadrati degli scarti. La distribuzione appare leggermente decentrata verso sinistra, riteniamo che questo sia a causa di un difetto di costruzione del pallinometro (come la posizione dei chiodi o dei buchi dai quali lasciar cadere le sfere), oltretutto a posteriori possiamo giustificare quest'inclinazione non prevista anche per via dell'inclinazione del pavimento stesso: come già notato nell'esperienza del carrello, i pavimenti del laboratorio risultano inclinati di circa \SI{1}{°}, poiché il pallinometro è stato messo in posizione orizzontale rispetto al tavolo (il quale è a sua volta orizzontale rispetto al pavimento) esso potrebbe essere stato soggetto alla stessa inclinazione della pavimentazione. Ricordiamo, inoltre, che lo strumento\footnote{Sono stati utilizzati dei libri impilati, controllando però che il lato del pallinometro che poggiava con il sostegno fosse esattamente parallelo allo spigolo al quale era appoggiato; a questo scopo è stato usato un foglio di carta millimetrata in cima alla pila per migliorare la precisione della verifica.} per mantenere in posizione fissa lo strumento non poteva garantire una precisione molto alta.
+
+Per confrontare i dati con le distribuzioni binomiali che nel nostro modello dovrebbero descrivere gli eventi, \emph{normalizziamo} i risultati in tabella \ref{tab:palli_orizzontale} dividendo ogni conteggio per il numero di sfere complessive, in modo da ottenere per ogni bin una percentuale relativa che è, per definizione, equivalente a quella usata in (\ref{eq:palli_E}). Riportiamo nei grafici \ref{fig:palli_orizzontale_33}, \ref{fig:palli_orizzontale_25} e \ref{fig:palli_orizzontale_17} le distribuzioni delle percentuali relative confrontate con le equivalenti distribuzioni binomiali del tipo $\mathscr{B}_{i_j, p_j}$ dove con $i_j$ si è indicato l'indice dell'ultimo bin raggiungibile ($i_j = (C_j+1)$).
 
 Inclinando leggermente verso destra la quinconce e ripetendo le misure si ottengono i risultati riportati nella tabella \ref{tab:palli_inclinato}, normalizzandoli e confrontandoli con quelli teorici previste dalle binomiali del tipo $\mathscr{B}_{i_k, p_k}$ si ottengono i grafici \ref{fig:palli_inclinato_33}, \ref{fig:palli_inclinato_25} e \ref{fig:palli_inclinato_17}, dove le probabilità $p_k$ sono ottenute con lo stesso procedimento illustrato sopra, e valgono:
 \begin{align*}
-	& \overline{p_1} \approx 0.55 \\ %Prima di fare i conti voglio confrontarmi con voi (ho usato una sola probabilità)
-	& \overline{p_2} = ?? \\
-	& \overline{p_3} = ??.
+	& \overline{p_1} = \SI{0.55 \pm 0.14}{} \\ %Prima di fare i conti voglio confrontarmi con voi (ho usato una sola probabilità)
+	& \overline{p_2} = \SI{0.52 \pm 0.13}{} \\
+	& \overline{p_3} = \SI{0.54 \pm 0.16}{}.
 \end{align*}
-Come ragionevolmente previsto, la distribuzione è leggermente spostata verso destra.
+Come ragionevolmente previsto, la distribuzione è leggermente spostata verso destra. Lo spostamento va relazionato a quello ottenuto con la quinconce in orizzontale, infatti l'inclinazione subita dal pallinometro è stata tale da spostare la percentuale di circa $10$ punti, e non solo di $3$ come una prima interpretazione potrebbe lasciar fraintendere.
 
+Notiamo inoltre che il dato corrispondente al bin$-31$ nella seconda misura con lo strumento inclinato, misura riportata nella seconda colonna della tabella \ref{tab:palli_inclinato}, risulta essere incompatibile con l'esperimento: il caso limite in cui la pallina fosse sempre caduta verso destra (quindi $C_2 = 25$ successi) avrebbe portato la pallina a cadere nel bin$-29$ che quindi risultava essere l'ultimo bin teoricamente raggiungibile. Riteniamo che la causa dell'incongruenza sia dovuta ad un'eccessiva inclinazione dello strumento, la quale ha portato alcune palline a compiere più di un passo verso destra senza collidere con alcun chiodo, falsando quindi la misura. Poiché, però, le probabilità calcolate risultano consistenti e l'evento spurio è isolato, riteniamo che il fenomeno sia stato un evento piuttosto raro e che, quindi, non abbia influito significativamente  sulla distribuzione. 
 \subsubsection{Pallinometro simulato}
 
 
