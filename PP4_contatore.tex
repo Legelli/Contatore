@@ -186,7 +186,7 @@ Contatore orizzontale & Contatore verticale & Contatore sul blocco di tufo \\
 \end{tabular}
 \end{table}
 
-\subsection{Pallinometro}
+\subsection{Pallinometro}\label{sec:pallinometro}
 \begin{figure}[h]
 \centering
 \includegraphics{pallinometro.png}
@@ -220,7 +220,7 @@ Inclinando leggermente in verticale il pallinometro e avendo cura di non inclina
 
 Utilizzando nell'equazione (\ref{eq:palli_P_vero}) ricaviamo la probabilità di successo (come detto, cosa definire \emph{successo} è arbitrario, da ora in poi considereremo come successo l'evento \emph{cadere verso destra})\footnote{Nel caso avessimo scelto come successo l'evento \emph{cadere verso sinistra} avremmo dovuto contare i bin a partire da destra.} calcolandola per ogni esperienza, si ottengono i valori:
 \begin{align*}
-	C_1 = 33 &\longrightarrow \overline{p_1} = \SI{0.44 \pm 0.12}{} \\ %Prima di fare i conti voglio confrontarmi con voi (per la prima li ho fatti tutti)
+	C_1 = 33 &\longrightarrow \overline{p_1} = \SI{0.44 \pm 0.12}{} \\ 
 	C_2 = 25 &\longrightarrow \overline{p_2} = \SI{0.42 \pm 0.15}{} \\
 	C_3 = 17 &\longrightarrow \overline{p_3} = \SI{0.46 \pm 0.16}{},
 \end{align*}
@@ -230,15 +230,18 @@ Per confrontare i dati con le distribuzioni binomiali che nel nostro modello dov
 
 Inclinando leggermente verso destra la quinconce e ripetendo le misure si ottengono i risultati riportati nella tabella \ref{tab:palli_inclinato}, normalizzandoli e confrontandoli con quelli teorici previste dalle binomiali del tipo $\mathscr{B}_{i_k, p_k}$ si ottengono i grafici \ref{fig:palli_inclinato_33}, \ref{fig:palli_inclinato_25} e \ref{fig:palli_inclinato_17}, dove le probabilità $p_k$ sono ottenute con lo stesso procedimento illustrato sopra, e valgono:
 \begin{align*}
-	& \overline{p_1} = \SI{0.55 \pm 0.14}{} \\ %Prima di fare i conti voglio confrontarmi con voi (ho usato una sola probabilità)
+	& \overline{p_1} = \SI{0.55 \pm 0.14}{} \\ 
 	& \overline{p_2} = \SI{0.52 \pm 0.13}{} \\
 	& \overline{p_3} = \SI{0.54 \pm 0.16}{}.
 \end{align*}
 Come ragionevolmente previsto, la distribuzione è leggermente spostata verso destra. Lo spostamento va relazionato a quello ottenuto con la quinconce in orizzontale, infatti l'inclinazione subita dal pallinometro è stata tale da spostare la percentuale di circa $10$ punti, e non solo di $3$ come una prima interpretazione potrebbe lasciar fraintendere.
 
 Notiamo inoltre che il dato corrispondente al bin$-31$ nella seconda misura con lo strumento inclinato, misura riportata nella seconda colonna della tabella \ref{tab:palli_inclinato}, risulta essere incompatibile con l'esperimento: il caso limite in cui la pallina fosse sempre caduta verso destra (quindi $C_2 = 25$ successi) avrebbe portato la pallina a cadere nel bin$-29$ che quindi risultava essere l'ultimo bin teoricamente raggiungibile. Riteniamo che la causa dell'incongruenza sia dovuta ad un'eccessiva inclinazione dello strumento, la quale ha portato alcune palline a compiere più di un passo verso destra senza collidere con alcun chiodo, falsando quindi la misura. Poiché, però, le probabilità calcolate risultano consistenti e l'evento spurio è isolato, riteniamo che il fenomeno sia stato un evento piuttosto raro e che, quindi, non abbia influito significativamente  sulla distribuzione. 
-\subsubsection{Pallinometro simulato}
 
+\subsubsection{Pallinometro simulato}
+Attraverso il software \emph{Palli200} in dotazione, simuliamo la caduta di $N = 10^6$ palline nelle condizioni teoriche descritte all'inizio della sezione \ref{sec:pallinometro} utilizzando come probabilità di \emph{successo} quelle calcolate a partire dai dati sperimentali nella sezione precedente, si confrontano quindi i risultati con quelli sperimentali. Si riportano in tabella \ref{tab:palli2000_orizzontale} le frequenze relative della prima serie di simulazioni, con $33, 25$ e $17$ collisioni associate rispettivamente ad una probabilità di $0.44, 0.42$ e $0.46$; si riportano nei grafici \ref{fig:palli2000_orizzontale_33}, \ref{fig:palli2000_orizzontale_25}, \ref{fig:palli2000_orizzontale_17} le frequenze appena simulate confrontate con quelle dei dati sperimentali: com'era prevedibile, i dati simulati seguono una distribuzione gaussiana (in quanto la binomiale tende ad una gaussiana per $N \rightarrow + \infty$), ma sono ugualmente coerenti con i dati ottenuti sperimentalmente.
+
+Si riportano in tabella \ref{tab:palli_2000_inclinato} le frequenze relative degli eventi caratterizzati da $33, 25$ e $17$ collisioni con probabilità associata $0.55, 0.52, 0.54$ (si simula il pallinometro inclinato); nei grafici \ref{fig:palli2000_inclinato_33}, \ref{fig:palli2000_inclinato_25} e \ref{fig:palli2000_inclinato_17} si confrontano le simulazioni con i dati sperimentali: i risultati sono analoghi a quelli ottenuti con il pallinometro in posizione orizzontale.
 
 \section{Considerazioni finali}
 
