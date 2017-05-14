@@ -23,6 +23,13 @@
 \usepackage[colorlinks=true, citecolor=black, linkcolor=sepia, urlcolor=black]{hyperref}
 \usepackage{mathrsfs}
 
+\usepackage{listings} %Per inserire codice
+\lstnewenvironment{codice_c}[1][]
+{\lstset{basicstyle=\small\ttfamily, columns=fullflexible,
+keywordstyle=\color{red}\bfseries, commentstyle=\color{blue},
+language=C, basicstyle=\small,
+numbers=left, numberstyle=\tiny,
+stepnumber=2, numbersep=5pt, frame=shadowbox, #1}}{}
 
 \setcounter{section}{-1}
 
@@ -42,7 +49,7 @@
 		\vspace{1cm}
 		\begin{tabular}{ccc}
 			Esperienza di laboratorio && Consegna della relazione \\
-			\emph{\small{3 maggio 2017}} && \emph{\small{12 maggio 2017}} \\
+			\emph{\small{3 maggio 2017}} && \emph{\small{14 maggio 2017}} \\
 		\end{tabular} 
 		
 		\vspace{0.5cm}
@@ -84,6 +91,7 @@ Inoltre, si farà riferimento alle seguenti formule:
 %===============SCOPO E DESCRIZIONE DELL'ESPERIENZA==============%
 \section{Scopo e descrizione dell'esperienza}
 \label{sec:descrizione}
+\paragraph{Misura di fenomeni di radiazione}
 L'evento ``osservazione di una particella radioattiva'' è descritto da una distribuzione di probabilità poissoniana; fissato un intervallo di tempo $\Delta t$, il parametro della distribuzione è $\lambda = R\Delta t$, ove $R$ indica il valore atteso del numero di conteggi per unità di tempo. La distribuzione di probabilità della variabile $x$, indicante il numero di conteggi, è data dall'equazione
 \begin{equation}\label{eq:Poisson}
 f(x\vert \mathcal{P}_{\lambda}) = \frac{\lambda^x}{x!}e^{-\lambda},
@@ -91,9 +99,12 @@ f(x\vert \mathcal{P}_{\lambda}) = \frac{\lambda^x}{x!}e^{-\lambda},
 ed ha valore atteso $\lambda$ e deviazione standard $\sqrt{\lambda}$.
 Interessandoci invece al tempo di attesa per rilevare una particella radioattiva, la probabilità che il primo conteggio avvenga dopo l'intervallo di tempo $\Delta t$ è data da
 \[
-P(T > \Delta t) = e^{-R\Delta t},
+P(T > \Delta t) = e^{-\Delta t / \tau},
 \]
-ove il prodotto $R\Delta t$ è pari al parametro $\lambda$ della precedente distribuzione di Poisson.
+ove il rapporto $\Delta t / \tau$ è pari al parametro $\lambda$ della precedente distribuzione di Poisson, e si è introdotto il parametro $\tau = 1 / R$ quale previsione del tempo di attesa prima che si verifichi il primo conteggio. 
+\paragraph{Studio di un pallinometro}
+Il pallinometro è uno strumento utilizzato per verificare le proprietà della distribuzione binomiale, in cui alcune sferette vengono inserite in cima ad esso e, dopo aver colpito $N-1$ file di chiodi con probabilità $p$ di andare dopo l'urto a destra e con probabilità $1-p$ di andare invece a sinistra, cadono all'interno di $N$ cellette. Studiamo l'andamento della distribuzione delle palline sia utilizzando un pallinometro fisico sia una simulazione via software.
+
 
 %================APPARATO SPERIMENTALE======================%		
 \section{Apparato Sperimentale}
@@ -122,7 +133,7 @@ Utilizziamo il contatore Geiger-Müller in modalità \textbf{scaler}, in cui si ac
 
 Il numero di conteggi per i diversi intervalli di tempo è riportato in tabella~\ref{tab:conteggi_tempo} e negli istogrammi di figura~\ref{fig:istogramma_deltat1}, \ref{fig:istogramma_deltat2}, \ref{fig:istogramma_deltat3}, \ref{fig:istogramma_deltat4} e \ref{fig:istogramma_deltat5}.
 
-Per quanto detto nella sezione~\ref{sec:descrizione}, stimiamo i parametri $\lambda_i$ della distribuzione di Poisson relativa ai diversi intervalli temporali calcolando il valor medio del numero di conteggi acquisiti per i diversi $\Delta t_i$. A tali stime associamo come incertezza la deviazione standard della media, la deviazione standard divisa per $\sqrt{50}$. Riportiamo le stime di $\lambda_i$ in tabella~\ref{tab:lambda_conteggi}.
+Per quanto detto nella sezione~\ref{sec:descrizione}, stimiamo i parametri $\lambda_i$ della distribuzione di Poisson relativa ai diversi intervalli temporali calcolando il valor medio del numero di conteggi acquisiti per i diversi $\Delta t_i$. A tali stime associamo come incertezza la deviazione standard della media, ossia la deviazione standard divisa per $\sqrt{50}$. Riportiamo le stime di $\lambda_i$ in tabella~\ref{tab:lambda_conteggi}.
 
 \begin{table}[ht]
 \caption{Stime dei parametri $\lambda$ della distribuzione di Poisson}
@@ -141,18 +152,25 @@ $\Delta t_5$ & 10.64 & 0.07 \\
 \end{tabular}
 \end{table}
 
-Sovrapponendo a ciascun istogramma l'andamento atteso per una distribuzione di Poisson con parametro $\lambda_i$ notiamo che entro le barre di incertezza i dati sono compatibili.%___________________________> DA COMMENTARE
+Sovrapponendo a ciascun istogramma l'andamento atteso per una distribuzione di Poisson con parametro $\lambda_i$ notiamo che entro le barre di incertezza i dati sono compatibili. Inoltre osserviamo che all'aumentare del tempo di osservazione l'andamento della distribuzione delle frequenze dei conteggi tende alla distribuzione gaussiana, dalla caratteristica simmetria già parzialmente visibile per $\Delta t_5 = \SI{10}{s}$. Le barre di incertezza hanno lunghezza data dalla radice del numero di conteggi, e sono state attribuite ai punti teorici invece che al numero di conteggi in quanto l'esperienza condotta si pone lo scopo di risalire alla forma della distribuzione a partire dal numero (noto) di conteggi, e infatti il parametro della distribuzione di Poisson che rappresenta l'andamento teorico è stato stimato proprio dai valori sperimentali.
 
 Escludendo il set di dati relativo a $\Delta t_5$, calcoliamo la frazione di $0$ conteggi e di $0$ o $1$ conteggio, riportata in tabella~\ref{tab:0e01conteggi}. Introduciamo il parametro $\tau = 1/R$ indicante la previsione del tempo di attesa prima che si verifichi il primo conteggio. Per quanto riguarda la prima frazione, essa ci permette di stimare l'andamento della probabilità che il primo conteggio si verifichi dopo un intervallo di tempo $\Delta t$, ed equivale alla differenza tra $1$ e la funzione di ripartizione del tempo di attesa per un conteggio, ossia
 \[
-F(\Delta t) = e^{-\frac{\Delta t}{\tau}} = e^{-\lambda}.
+F(\Delta t) = e^{-\frac{\Delta t}{\tau}} = e^{-R\Delta t}.
 \]
-Sovrapponiamo dunque al grafico delle frazioni di $0$ conteggi in funzione di $\Delta t$ l'andamento aspettato previsto dalla distribuzione esponenziale dei tempi di attesa, descritto dalla equazione precedente.
+Sovrapponiamo dunque al grafico, in figura~\ref{fig:0conteggi}, delle frazioni di $0$ conteggi in funzione di $\Delta t$ l'andamento aspettato previsto dalla distribuzione esponenziale dei tempi di attesa, descritto dalla equazione precedente, dove abbiamo utilizzato come \emph{rate} quella estratta nella successiva sezione~\ref{subsec:10minuti} a partire dai conteggi con contatore orizzontale per il fondo. Come incertezza notiamo che l'errore qui associato è di tipo binomiale, poiché consideriamo come \emph{successo} il numero di conteggi pari a $0$ e \emph{insuccesso} l'evento complementare. Pertanto, si ha
+\begin{equation}\label{eq:errorbarsgeiger}
+\sigma_{\text{$0$ conteggi}} = \sqrt{\frac{p\cdot(1-p)}{N}},
+\end{equation}
+ove come probabilità $p$ scegliamo la frequenza relativa dei casi con $0$ conteggi, ed $N$ è pari a $50$. Riportiamo tale incertezza come barre di errore nel grafico prima citato.
 
 Per quanto riguarda invece la seconda frazione, essa corrisponde alla distribuzione del tempo di attesa per il secondo conteggio, ossia alla probabilità di osservare $0$ o $1$ conteggio nell'intervallo di tempo $\Delta t$. La funzione che descrive questa probabilità è
 \[
 G(\Delta t) = e^{-\frac{\Delta t}{\tau}} + \frac{\Delta t}{\tau} e^{-\frac{\Delta t}{\tau}}.
-\]%_____________________________________>DA COMPLETARE
+\]
+Riportiamo anche in questo caso i valori ottenuti nel grafico di figura~\ref{fig:0+1conteggi}, sovrapponendo l'andamento atteso descritto dalla funzione $G(\Delta t)$, utilizzando come \emph{rate} la medesima utilizzata precedentemente, e ricordando la relazione $\tau = 1 / R$. Le incertezze sono state calcolate con la stessa equazione~\ref{eq:errorbarsgeiger}, utilizzando ancora come probabilità $p$ la frequenza relativa dei casi con $0$ e con $1$ conteggio, derivante dal fatto che l'errore sia ancora di tipo binomiale, considerando come \emph{successo} il numero di conteggi pari a $0$ o $1$. Anche in questo caso l'incertezza è rappresentata con le barre di errore.
+
+Notiamo infine che entro le barre di incertezza le nostre misure sono compatibili con la distribuzione teorica prevista per i tempi di attesa.
 
 \begin{table}[ht]
 \caption{Frazione di $0$ e di $0+1$ conteggi negli intervalli tra $1$ e \SI{4}{s}}
@@ -171,6 +189,7 @@ $\Delta t_4$ & 0.02  & 0.06 \\
 \end{table}
 
 \subsubsection{Misura dei conteggi per unità di tempo del fondo e del blocco di tufo}
+\label{subsec:10minuti}
 Utilizzando ancora il contatore Geiger-Müller in modalità \textbf{scaler}, acquisiamo i conteggi per un intervallo di tempo di $\Delta t = \SI{600}{s}$, ponendolo prima orizzontale e lontano dal blocco di tufo, quindi verticale, ossia inclinato su un fianco, infine appoggiato sul blocco di tufo. I conteggi misurati sono riportati in tabella~\ref{tab:conteggi600s}.
 
 \begin{table}[ht]
@@ -186,11 +205,59 @@ Contatore orizzontale & Contatore verticale & Contatore sul blocco di tufo \\
 \end{tabular}
 \end{table}
 
+Dai conteggi misurati è possibile stimare i parametri di Poisson $\lambda$, con incertezza data da $\sqrt{\lambda}$. Si ha dunque
+\begin{align*}
+\hat{\lambda}_{\text{ambiente+raggi cosmici}} &= \hat{\lambda}_{A+C} = 646 \pm \sqrt{646} \\
+\hat{\lambda}_{\text{ambiente+$\frac{1}{2}$raggi cosmici}} &= \hat{\lambda}_{A+\frac{1}{2}C} = 588 \pm \sqrt{588} \\
+\hat{\lambda}_{\text{ambiente+raggi cosmici+ tufo}} &= \hat{\lambda}_{A+C+T} = 1395 \pm \sqrt{1395}, 
+\end{align*}
+ricordando che ponendo il Geiger in posizione verticale misuriamo all'incirca la metà dei raggi cosmici misurati nella configurazione orizzontale. Possiamo ora calcolare i parametri di Poisson che otterremmo se potessimo misurare solo la radioattività ambientale: 
+\[
+\hat{\lambda}_A = 2\cdot\hat{\lambda}_{A+\frac{1}{2}C}-\hat{\lambda}_{A+C} = 530 \pm 55,
+\]
+dove l'incertezza è stata propagata con la formula
+\[
+\sigma_{\hat{\lambda}_A} = \sqrt{\left(2\cdot\sigma_{\hat{\lambda}_{A+\frac{1}{2}C}}\right)^2+\sigma_{\hat{\lambda}_{A+C}}^2};
+\]
+i raggi cosmici:
+\[
+\hat{\lambda}_C = 2\cdot (\hat{\lambda}_{A+C} - \hat{\lambda}_{A+\frac{1}{2}C}) = 116 \pm 70,
+\]
+dove l'incertezza è stata propagata con la formula
+\[
+\sigma_{\hat{\lambda}_C} = 2\cdot\sqrt{\sigma_{\hat{\lambda}_{A+C}}^2+\sigma_{\hat{\lambda}_{A+\frac{1}{2}C}}^2};
+\]
+e la radioattività del tufo:
+\[
+\hat{\lambda}_T = \hat{\lambda}_{A+C+T} - \hat{\lambda}_{A+C} = 749 \pm 45,
+\]
+dove l'incertezza è stata propagata con la formula
+\[
+\sigma_{\hat{\lambda}_{T}} = \sqrt{\sigma_{\hat{\lambda}_{A+C+T}}^2+\sigma_{\hat{\lambda}_{A+C}}^2}.
+\]
+Come detto nella sezione~\ref{sec:descrizione}, il parametro di Poisson è legato al \emph{rate} $r$, ossia al numero di conteggi per unità di tempo, dall'equazione $\lambda = r\Delta t$, dove $\Delta t$ è pari nel nostro caso a \SI{600}{s}, con incertezza trascurabile rispetto a quella sul numero di conteggi. Dai valori precedenti di lambda otteniamo dunque per la radioattività ambientale un \emph{rate} pari a
+\[
+r_A = \frac{\hat{\lambda}_A}{\Delta t} = \SI{0.88 \pm 0.09}{s^{-1}},
+\] 
+per i raggi cosmici un valore di
+\[
+r_C = \frac{\hat{\lambda}_C}{\Delta t} = \SI{0.19 \pm 0.12}{s^{-1}},
+\]
+e per la radioattività del tufo
+\[
+r_T = \frac{\hat{\lambda}_T}{\Delta t} = \SI{1.25 \pm 0.07}{s^{-1}}.
+\]
+Le incertezze, data la trascurabilità di quella sul tempo, sono state ottenute dividendo quelle del parametro di Poisson per l'intervallo di tempo.
+Notiamo che le incertezze relative sono maggiori del $5\%$ e, nel caso dei raggi cosmici, arrivano a superare il $63\%$: riteniamo che questo sia dovuto al fatto che abbiamo eseguito una sola misurazione della radiazione e compiuto l'analisi di un solo dato; riteniamo che avendo preso la media di più misurazioni l'incertezza sarebbe diminuita. Inoltre sottolineiamo che non abbiamo considerato il possibile rumore elettronico del contatore Geiger-Müller, che potrebbe aver influito sul conteggio di alcuni eventi non realmente rilevati.
+
+Per confronto con la prima parte di questa sezione dedicata al conteggio di fenomeni di radiazione, notiamo che dalle misure riportate nella tabella~\ref{tab:lambda_conteggi} possiamo estrarre un \emph{rate} medio per la radiazione di fondo, comprendente quella ambientale e i raggi cosmici, pari a $R = \SI{0.98 \pm 0.12}{s^{-1}}$, con incertezza data dalla deviazione standard dei valori del rate ricavati dalla tabella indicata ($R = \lambda / \Delta t$). Questo valore è compatibile entro un sigma con quello ricavato poco sopra, dunque possiamo concludere che i risultati ottenuti misurando la radiazione per intervalli inferiori o uguali a \SI{10}{s} siano in accordo con quelli ottenuti con l'intervallo temporale di \SI{600}{s}, in quanto la distribuzione di probabilità sottostante al fenomeno è la stessa.
+
+
 \subsection{Pallinometro}\label{sec:pallinometro}
 \begin{figure}[h]
 \centering
 \includegraphics{pallinometro.png}
-\caption{Schematizzazione della quinconce di Galton (evidentemente malfunzionante)}
+\caption{Schematizzazione della quinconce di Galton}
 \label{fig:pallinometro}
 \end{figure}
 Supponiamo di lasciar cadere una sferetta ideale di massa non nulla in uno strumento (anch'esso ideale) come quello in figura \ref{fig:pallinometro}: per ogni riga la sfera urterà perfettamente verticale un chiodo (punti verdi della figura) e cadrà con uguale probabilità a destra o a sinistra terminando la caduta in una delle colonne sul fondo dello strumento; supponiamo quindi di ripetere l'esperienza $N$ volte: è di interesse discutere la modalità con cui le $N$ sfere si distribuiranno nelle colonne. Lo strumento appena descritto è chiamato (a seguito del suo ideatore) \emph ``quinconce di Galton"\footnote{Per ``quinconce'' si intende il simbolo usato dai Romani per indicare la frazione $5/12$, simbolo che ricorda la disposizione dei chiodi dello strumento; volgarmente quest'ultimo è ricordato come ``pallinometro''.} ed ha le seguenti caratteristiche:
@@ -198,10 +265,10 @@ Supponiamo di lasciar cadere una sferetta ideale di massa non nulla in uno strum
 	\item ogni collisione (da ora in poi chiamata \emph{evento}) ha esclusivamente due modalità di manifestarsi, in quanto la pallina cade o a sinistra o a destra;
 	\item il numero di eventi è discreto e finito, essendoci un evento per ogni riga\footnote{La distanza tra due righe è scelta appositamente affinché avvenga questo.};
 	\item la probabilità che la pallina cada a destra (o a sinistra) è esattamente identica\footnote{Ricordando che si tratta di un \emph{gedankenexperiment}.} per ogni chiodo e rimane costante nel tempo.
-\end{itemize} Nel complesso, l'esperimento concettuale appena proposto è completamente compatibile con un \emph{processo di Bernoulli} e l'esito dell'esperimento è descritto da una distribuzione binomiale\footnote{In realtà, la successione logica con la quale sono stati presentati gli argomenti di questa sezione è stata invertita: storicamente, Galton ha ideato questa esperienza proprio per valutare l'efficacia della distribuzione binomiale, la quinconce non ha altro scopo.}: ci aspettiamo, infatti, di trovare nell'$i-$esimo bin un numero di sfere pari circa a 
+\end{itemize} Nel complesso, il singolo evento di urto della pallina con un chiodo è schematizzato da un \emph{processo di Bernoulli} e l'esito dell'esperimento è descritto da una distribuzione binomiale\footnote{In realtà, la successione logica con la quale sono stati presentati gli argomenti di questa sezione è stata invertita: storicamente, Galton ha ideato questa esperienza proprio per valutare l'efficacia della distribuzione binomiale, la quinconce non ha altro scopo.}: ci aspettiamo, infatti, di trovare nell'$i-$esimo bin un numero di sfere pari a 
 \begin{align}\label{eq:palli_E}
 	\vec{E}(i, N, C) &= P(i) \cdot N \notag \\
-		&= \begin{pmatrix} C+1 \\ i \end{pmatrix} p^i (1-p)^{C+1-i}N
+		&= \begin{pmatrix} C+1 \\ i \end{pmatrix} p^i (1-p)^{C+1-i}\cdot N
 \end{align}
 dove $N$ è il numero di palline lasciate cadere e $C$ il numero di collisioni prima di fermarsi (che corrisponde al numero di righe). 
 
@@ -226,7 +293,7 @@ Utilizzando nell'equazione (\ref{eq:palli_P_vero}) ricaviamo la probabilità di s
 \end{align*}
 dove la deviazione standard è stata calcolata come valore atteso della distribuzione dei quadrati degli scarti. La distribuzione appare leggermente decentrata verso sinistra, riteniamo che questo sia a causa di un difetto di costruzione del pallinometro (come la posizione dei chiodi o dei buchi dai quali lasciar cadere le sfere), oltretutto a posteriori possiamo giustificare quest'inclinazione non prevista anche per via dell'inclinazione del pavimento stesso: come già notato nell'esperienza del carrello, i pavimenti del laboratorio risultano inclinati di circa \SI{1}{°}, poiché il pallinometro è stato messo in posizione orizzontale rispetto al tavolo (il quale è a sua volta orizzontale rispetto al pavimento) esso potrebbe essere stato soggetto alla stessa inclinazione della pavimentazione. Ricordiamo, inoltre, che lo strumento\footnote{Sono stati utilizzati dei libri impilati, controllando però che il lato del pallinometro che poggiava con il sostegno fosse esattamente parallelo allo spigolo al quale era appoggiato; a questo scopo è stato usato un foglio di carta millimetrata in cima alla pila per migliorare la precisione della verifica.} per mantenere in posizione fissa lo strumento non poteva garantire una precisione molto alta.
 
-Per confrontare i dati con le distribuzioni binomiali che nel nostro modello dovrebbero descrivere gli eventi, \emph{normalizziamo} i risultati in tabella \ref{tab:palli_orizzontale} dividendo ogni conteggio per il numero di sfere complessive, in modo da ottenere per ogni bin una percentuale relativa che è, per definizione, equivalente a quella usata in (\ref{eq:palli_E}). Riportiamo nei grafici \ref{fig:palli_orizzontale_33}, \ref{fig:palli_orizzontale_25} e \ref{fig:palli_orizzontale_17} le distribuzioni delle percentuali relative confrontate con le equivalenti distribuzioni binomiali del tipo $\mathscr{B}_{i_j, p_j}$ dove con $i_j$ si è indicato l'indice dell'ultimo bin raggiungibile ($i_j = (C_j+1)$).
+Per confrontare i dati con le distribuzioni binomiali che nel nostro modello dovrebbero descrivere gli eventi, \emph{normalizziamo} i risultati in tabella \ref{tab:palli_orizzontale} dividendo ogni conteggio per il numero di sfere complessive, in modo da ottenere per ogni bin una percentuale relativa che è, per definizione, equivalente a quella usata in (\ref{eq:palli_E}). Riportiamo nei grafici \ref{fig:palli_orizzontale_33}, \ref{fig:palli_orizzontale_25} e \ref{fig:palli_orizzontale_17} le distribuzioni delle percentuali relative confrontate con le equivalenti distribuzioni binomiali del tipo $\mathscr{B}_{i_j, p=0.5}$ dove con $i_j$ si è indicato l'indice dell'ultimo bin raggiungibile ($i_j = (C_j+1)$).
 
 Inclinando leggermente verso destra la quinconce e ripetendo le misure si ottengono i risultati riportati nella tabella \ref{tab:palli_inclinato}, normalizzandoli e confrontandoli con quelli teorici previste dalle binomiali del tipo $\mathscr{B}_{i_k, p_k}$ si ottengono i grafici \ref{fig:palli_inclinato_33}, \ref{fig:palli_inclinato_25} e \ref{fig:palli_inclinato_17}, dove le probabilità $p_k$ sono ottenute con lo stesso procedimento illustrato sopra, e valgono:
 \begin{align*}
@@ -239,25 +306,44 @@ Come ragionevolmente previsto, la distribuzione è leggermente spostata verso des
 Notiamo inoltre che il dato corrispondente al bin$-31$ nella seconda misura con lo strumento inclinato, misura riportata nella seconda colonna della tabella \ref{tab:palli_inclinato}, risulta essere incompatibile con l'esperimento: il caso limite in cui la pallina fosse sempre caduta verso destra (quindi $C_2 = 25$ successi) avrebbe portato la pallina a cadere nel bin$-29$ che quindi risultava essere l'ultimo bin teoricamente raggiungibile. Riteniamo che la causa dell'incongruenza sia dovuta ad un'eccessiva inclinazione dello strumento, la quale ha portato alcune palline a compiere più di un passo verso destra senza collidere con alcun chiodo, falsando quindi la misura. Poiché, però, le probabilità calcolate risultano consistenti e l'evento spurio è isolato, riteniamo che il fenomeno sia stato un evento piuttosto raro e che, quindi, non abbia influito significativamente  sulla distribuzione. 
 
 \subsubsection{Pallinometro simulato}
-Attraverso il software \emph{Palli200} in dotazione, simuliamo la caduta di $N = 10^6$ palline nelle condizioni teoriche descritte all'inizio della sezione \ref{sec:pallinometro} utilizzando come probabilità di \emph{successo} quelle calcolate a partire dai dati sperimentali nella sezione precedente, si confrontano quindi i risultati con quelli sperimentali. Si riportano in tabella \ref{tab:palli2000_orizzontale} le frequenze relative della prima serie di simulazioni, con $33, 25$ e $17$ collisioni associate rispettivamente ad una probabilità di $0.44, 0.42$ e $0.46$; si riportano nei grafici \ref{fig:palli2000_orizzontale_33}, \ref{fig:palli2000_orizzontale_25}, \ref{fig:palli2000_orizzontale_17} le frequenze appena simulate confrontate con quelle dei dati sperimentali: com'era prevedibile, i dati simulati seguono una distribuzione gaussiana (in quanto la binomiale tende ad una gaussiana per $N \rightarrow + \infty$), ma sono ugualmente coerenti con i dati ottenuti sperimentalmente.
+Attraverso il software \emph{Palli2000} in dotazione, simuliamo la caduta di $N = 10^6$ palline nelle condizioni teoriche descritte all'inizio della sezione \ref{sec:pallinometro} utilizzando come probabilità di \emph{successo} quelle calcolate a partire dai dati sperimentali nella sezione precedente, si confrontano quindi i risultati con quelli sperimentali. Si riportano in tabella \ref{tab:palli2000_orizzontale} le frequenze relative della prima serie di simulazioni, con $33, 25$ e $17$ collisioni associate rispettivamente ad una probabilità di $0.44, 0.42$ e $0.46$; si riportano nei grafici \ref{fig:palli2000_orizzontale_33}, \ref{fig:palli2000_orizzontale_25}, \ref{fig:palli2000_orizzontale_17} le frequenze appena simulate confrontate con quelle dei dati sperimentali: com'era prevedibile, i dati simulati seguono una distribuzione gaussiana (in quanto la binomiale tende ad una gaussiana per $N \rightarrow + \infty$), ma sono ugualmente coerenti con i dati ottenuti sperimentalmente.
 
 Si riportano in tabella \ref{tab:palli_2000_inclinato} le frequenze relative degli eventi caratterizzati da $33, 25$ e $17$ collisioni con probabilità associata $0.55, 0.52, 0.54$ (si simula il pallinometro inclinato); nei grafici \ref{fig:palli2000_inclinato_33}, \ref{fig:palli2000_inclinato_25} e \ref{fig:palli2000_inclinato_17} si confrontano le simulazioni con i dati sperimentali: i risultati sono analoghi a quelli ottenuti con il pallinometro in posizione orizzontale.
 
 \section{Considerazioni finali}
+Per quanto riguarda la misura di conteggio di fenomeni di radioattività, abbiamo potuto osservare come la distribuzione di Poisson descrivi accuratamente la distribuzione dei conteggi fissato l'intervallo temporale. La rilevazione di una particella ionizzante è infatti un evento raro e allo stesso tempo il numero di particelle potenzialmente rilevabili riteniamo sia dell'ordine del numero di Avogadro, pertanto il limite della distribuzione binomiale, con \emph{successo} la rilevazione della particella, per $N \rightarrow \infty$ e $p \rightarrow 0$ diventa una distribuzione di Poisson, i cui parametri $\lambda$ abbiamo stimato, e poi confrontato con i dati sperimentali. Studiando invece la distribuzione dei tempi di attesa, osserviamo che questi seguono un'esponenziale, i cui parametri abbiamo stimato a partire dalla successiva misurazione del fondo di radiazione ambientale. I conteggi acquisiti per \SI{600}{s} hanno infine permesso una stima con incertezza compresa tra il $5\%$ e il $64\%$ (nel caso dei raggi cosmici) della radioattività ambientale, di quella dovuta ai raggi cosmici e di quella di un blocco di tufo.
+
+Per quanto riguarda il pallinometro, invece, la distribuzione delle palline all'interno dei \emph{bin} del pallinometro fisico non rispecchia interamente la previsione binomiale teorica: ciò è dovuto alla inclinazione dello strumento stesso, alle imperfezioni dei chiodi che contribuiscono a far sorgere una probabilità diversa per la caduta a destra o a sinistra, alla conservazione della quantità di moto delle sferette che, una volta urtato un chiodo, hanno meno probabilità di invertire la direzione del proprio moto, dato anche il fatto che la traiettoria seguita non è dritta bensì parabolica, agli urti tra sferette che influenzano la probabilità delle palline inserite l'una di seguito all'altra di cadere nello stesso bin. Il pallinometro simulato, invece, facendo uso di $10^6$ palline, permette di sopprimere gli effetti di fluttuazione statistica e di ottenere una distribuzione pienamente compatibile con la binomiale, sia nel caso di $p = 0.5$, sia nel caso di $p<0.5$, utilizzando il valore inferito a partire dalla distribuzione delle palline nel pallinometro fisico leggermente inclinato. 
+
+A titolo di approfondimento, abbiamo scritto un programma in \emph{C}, riportato nel listato~\ref{list:codice}, che simulasse il pallinometro data una probabilità distribuita normalmente per ogni chiodo. Ogni pallina, cadendo su un chiodo, ha una probabilità attesa di $0.5$ con sigma $0.15$ di andare a destra, e la distribuzione gaussiana delle probabilità dovrebbe in linea di massima tenere conto degli effetti dovuti alle imperfezioni dei chiodi. Notiamo che questo modello si adatta meglio ai dati sperimentali, ma non tiene comunque conto degli effetti suddetti dovuti all'urto tra due palline nella fase di discesa e alla conservazione della quantità di moto in una direzione.
+
+
 
 
 \pagebreak
 %=================APPENDICE==================================
+
 \section{Appendice: tabelle e grafici}
 
-\begin{table}[ht]
-\caption{Numero di conteggi fissato l'intervallo di tempo}
-\label{tab:conteggi_tempo}
-\centering
-\begin{tabular}{rrrrrr}
+\subsection{Misura dei conteggi con il contatore Geiger-Müller}
+
+\begin{center}
+\begin{longtable}{rrrrrr}
+\label{tab:conteggi_tempo} \\
+\caption{Numero di conteggi fissato l'intervallo di tempo}\\
   \hline
  Intervallo & $\Delta t_1$ & $\Delta t_2$ & $\Delta t_3$ & $\Delta t_4$ & $\Delta t_5$ \\ 
   \hline
+  \endfirsthead
+\multicolumn{6}{r}
+{\tablename\ \thetable\ -- \textit{Continua dalla pagina precedente}} \\[0.3cm]
+\hline
+\endhead
+\hline \multicolumn{6}{r}
+{\textit{Continua alla pagina successiva}} \\
+\endfoot
+\hline
+\endlastfoot
  &   1 &   2 &   3 &   0 &   5 \\ 
  &   1 &   1 &   4 &   5 &  13 \\ 
  &   1 &   2 &   3 &   6 &   7 \\ 
@@ -309,15 +395,67 @@ Si riportano in tabella \ref{tab:palli_2000_inclinato} le frequenze relative deg
    &   0 &   1 &   2 &   2 &  11 \\ 
   50 &   0 &   3 &   5 &   2 &  11 \\ 
    \hline
-\end{tabular}
-\end{table}
+\end{longtable}
+\end{center}
 
+\begin{figure}[H]
+\caption{Numero di conteggi per l'intervallo di tempo $\Delta t_1 = \SI{1}{s}$}
+\label{fig:istogramma_deltat1}
+\centering
+\includegraphics[scale=0.5]{1s.eps}
+\end{figure}
 
+\begin{figure}[H]
+\caption{Numero di conteggi per l'intervallo di tempo $\Delta t_2 = \SI{2}{s}$}
+\label{fig:istogramma_deltat2}
+\centering
+\includegraphics[scale=0.5]{2s.eps}
+\end{figure}
+
+\begin{figure}[H]
+\caption{Numero di conteggi per l'intervallo di tempo $\Delta t_3 = \SI{3}{s}$}
+\label{fig:istogramma_deltat3}
+\centering
+\includegraphics[scale=0.5]{3s.eps}
+\end{figure}
+
+\begin{figure}[H]
+\caption{Numero di conteggi per l'intervallo di tempo $\Delta t_4 = \SI{4}{s}$}
+\label{fig:istogramma_deltat4}
+\centering
+\includegraphics[scale=0.5]{4s.eps}
+\end{figure}
+
+\begin{figure}[H]
+\caption{Numero di conteggi per l'intervallo di tempo $\Delta t_5 = \SI{10}{s}$}
+\label{fig:istogramma_deltat5}
+\centering
+\includegraphics[scale=0.5]{10s.eps}
+\end{figure}
+
+%===============CONTEGGI INTEGRALI
+
+\begin{figure}[H]
+\caption{Frazione di $0$ conteggi misurati dal contatore Geiger-Müller}
+\label{fig:0conteggi}
+\centering
+\includegraphics[scale=0.7]{0.eps}
+\end{figure}
+
+\begin{figure}[H]
+\caption{Frazione di $0$ e di $1$ conteggio misurati dal contatore Geiger-Müller}
+\label{fig:0+1conteggi}
+\centering
+\includegraphics[scale=0.7]{0+1.eps}
+\end{figure}
+
+\pagebreak
+%============PALLINOMETRO
 \subsection{Pallinometro}
-\begin{table}[ht]
-\caption{Conteggi registrati per i bin}
-\label{tab:palli_orizzontale}
 
+\begin{table}[H]
+\caption{Conteggi registrati per i bin con il pallinometro orizzontale}
+\label{tab:palli_orizzontale}
 \centering
 \begin{tabular}{ccccc}
   \hline
@@ -363,8 +501,8 @@ Si riportano in tabella \ref{tab:palli_2000_inclinato} le frequenze relative deg
 
 
 
-\begin{table}[ht]
-\caption{Conteggi registrati per i bin inclinato}
+\begin{table}[H]
+\caption{Conteggi registrati per i bin con il pallinometro inclinato}
 \label{tab:palli_inclinato}
 \centering
 \begin{tabular}{ccccc}
@@ -411,8 +549,8 @@ Si riportano in tabella \ref{tab:palli_2000_inclinato} le frequenze relative deg
 
 
 
-\begin{table}[ht]
-\caption{frequenze relative orizzontale}
+\begin{table}[H]
+\caption{Frequenze relative dei singoli bin con il pallinometro orizzontale}
 \label{tab:freq_rel_orizzontale}
 \centering
 \begin{tabular}{ccccc}
@@ -459,8 +597,8 @@ Si riportano in tabella \ref{tab:palli_2000_inclinato} le frequenze relative deg
 
 
 
-\begin{table}[ht]
-\caption{frequenze relative inclinato}
+\begin{table}[H]
+\caption{Frequenze relative dei singoli bin con il pallinometro inclinato}
 \label{tab:freq_rel_inclinato}
 \centering
 \begin{tabular}{ccccc}
@@ -505,7 +643,81 @@ Si riportano in tabella \ref{tab:palli_2000_inclinato} le frequenze relative deg
 \end{tabular}
 \end{table}
 
-
+\begin{codice_c}[caption={Simulazione di un pallinometro con distribuzione gaussiana della probabilità di cadere a destra per ogni chiodo}, label={list:codice}][H]
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+#define nMin 10 //palline
+#define nMax 1000000
+#define xMin 0.
+#define xMax 1.
+#define M 34 //cellette (compresa la numero 0)
+#define p 0.5 //probabilità
+#define MU 0.5
+#define SIGMA 0.15
+double casual(double min, double max);
+double fdist(double x, double mu, double sigma);
+double hitAndMiss(double mu, double sigma);
+int main() {
+  int n = 0;
+  int chk = 0;
+  int i = 0;
+  int k = 0;
+  int d = 0;
+  int celletta[M] = {0};
+  FILE *pf;
+  srand48(time(0));
+  printf("Questo programma simula il funzionamento di un
+pallinometro con %d file di chiodi e dunque %d cellette.\nInserisci
+il numero di palline, compreso tra %d e %d: ", M-1, M, nMin, nMax);
+  do {
+  chk = scanf("%d", &n);
+  if (chk != 1) {
+    char buffer[255];
+    scanf("%s", buffer);
+    printf("Inserisci nuovamente il numero: ");
+  }
+  } while((chk != 1) || (n<nMin) || (n>nMax));
+  for(i=0;i<n;i++) {
+    for(k=0;k<M-1;k++) {
+      if(casual(0.,1.)>hitAndMiss(MU,SIGMA)) {
+        d++;
+} }
+    celletta[d]++;
+d = 0; }
+  pf = fopen("palli2000.dat", "w");
+for(k=0;k<M;k++) {
+    printf("Celletta\t%d:\t%d\n", k, celletta[k]);
+    fprintf(pf, "%d\t%d\n", k, celletta[k]);
+}
+  fclose(pf);
+}
+double casual(double min, double max) {
+  double diff = max - min;
+  return min + diff * lrand48() / RAND_MAX;
+}
+double fdist(double x, double mu, double sigma) {
+  return (1/(sigma*sqrt(2*M_PI))) * exp(-(pow((x-mu),2)) /
+(2*pow(sigma,2)));
+}
+double hitAndMiss(double mu, double sigma) {
+  double x = 0.;
+  double y = 0.;
+  double f = 0.;
+  double xDef = 0.;
+  double F = fdist(mu,mu,sigma);
+  do {
+    x = casual(xMin, xMax);
+    y = casual(0., F);
+    f = fdist(x, mu, sigma);
+    if(y < f) {
+      xDef = x;
+    }
+  } while(y >= f);
+  return xDef;
+}
+\end{codice_c}
 
 
 
