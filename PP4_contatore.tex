@@ -306,9 +306,9 @@ Come ragionevolmente previsto, la distribuzione è leggermente spostata verso des
 Notiamo inoltre che il dato corrispondente al bin$-31$ nella seconda misura con lo strumento inclinato, misura riportata nella seconda colonna della tabella \ref{tab:palli_inclinato}, risulta essere incompatibile con l'esperimento: il caso limite in cui la pallina fosse sempre caduta verso destra (quindi $C_2 = 25$ successi) avrebbe portato la pallina a cadere nel bin$-29$ che quindi risultava essere l'ultimo bin teoricamente raggiungibile. Riteniamo che la causa dell'incongruenza sia dovuta ad un'eccessiva inclinazione dello strumento, la quale ha portato alcune palline a compiere più di un passo verso destra senza collidere con alcun chiodo, falsando quindi la misura. Poiché, però, le probabilità calcolate risultano consistenti e l'evento spurio è isolato, riteniamo che il fenomeno sia stato un evento piuttosto raro e che, quindi, non abbia influito significativamente  sulla distribuzione. 
 
 \subsubsection{Pallinometro simulato}
-Attraverso il software \emph{Palli2000} in dotazione, simuliamo la caduta di $N = 10^6$ palline nelle condizioni teoriche descritte all'inizio della sezione \ref{sec:pallinometro} utilizzando come probabilità di \emph{successo} quelle calcolate a partire dai dati sperimentali nella sezione precedente, si confrontano quindi i risultati con quelli sperimentali. Si riportano in tabella \ref{tab:palli2000_orizzontale} le frequenze relative della prima serie di simulazioni, con $33, 25$ e $17$ collisioni associate rispettivamente ad una probabilità di $0.44, 0.42$ e $0.46$; si riportano nei grafici \ref{fig:palli2000_orizzontale_33}, \ref{fig:palli2000_orizzontale_25}, \ref{fig:palli2000_orizzontale_17} le frequenze appena simulate confrontate con quelle dei dati sperimentali: com'era prevedibile, i dati simulati seguono una distribuzione gaussiana (in quanto la binomiale tende ad una gaussiana per $N \rightarrow + \infty$), ma sono ugualmente coerenti con i dati ottenuti sperimentalmente.
+Attraverso il software \emph{Palli2000} in dotazione, simuliamo la caduta di $N = 10^6$ palline nelle condizioni teoriche descritte all'inizio della sezione \ref{sec:pallinometro} utilizzando come probabilità di \emph{successo} quella teorica di $0.5$, si confrontano quindi i risultati con quelli sperimentali. Si riportano nei grafici \ref{fig:palli2000_orizzontale_33}, \ref{fig:palli2000_orizzontale_25}, \ref{fig:palli2000_orizzontale_17} le frequenze simulate con \emph{Palli2000} confrontate con quelle dei dati sperimentali: com'era prevedibile, i dati simulati seguono una distribuzione gaussiana (in quanto la binomiale tende ad una gaussiana per $N \rightarrow + \infty$), ma sono ugualmente coerenti con i dati ottenuti sperimentalmente.
 
-Si riportano in tabella \ref{tab:palli_2000_inclinato} le frequenze relative degli eventi caratterizzati da $33, 25$ e $17$ collisioni con probabilità associata $0.55, 0.52, 0.54$ (si simula il pallinometro inclinato); nei grafici \ref{fig:palli2000_inclinato_33}, \ref{fig:palli2000_inclinato_25} e \ref{fig:palli2000_inclinato_17} si confrontano le simulazioni con i dati sperimentali: i risultati sono analoghi a quelli ottenuti con il pallinometro in posizione orizzontale.
+Si simula ora con \emph{Palli2000} il pallinometro inclinato a partire dai valori di probabilità per i diversi fori di ingresso della pallina $0.55, 0.52, 0.54$; nei grafici \ref{fig:palli2000_inclinato_33}, \ref{fig:palli2000_inclinato_25} e \ref{fig:palli2000_inclinato_17} si confrontano le simulazioni con i dati sperimentali: i risultati sono analoghi a quelli ottenuti con il pallinometro in posizione orizzontale.
 
 \section{Considerazioni finali}
 Per quanto riguarda la misura di conteggio di fenomeni di radioattività, abbiamo potuto osservare come la distribuzione di Poisson descrivi accuratamente la distribuzione dei conteggi fissato l'intervallo temporale. La rilevazione di una particella ionizzante è infatti un evento raro e allo stesso tempo il numero di particelle potenzialmente rilevabili riteniamo sia dell'ordine del numero di Avogadro, pertanto il limite della distribuzione binomiale, con \emph{successo} la rilevazione della particella, per $N \rightarrow \infty$ e $p \rightarrow 0$ diventa una distribuzione di Poisson, i cui parametri $\lambda$ abbiamo stimato, e poi confrontato con i dati sperimentali. Studiando invece la distribuzione dei tempi di attesa, osserviamo che questi seguono un'esponenziale, i cui parametri abbiamo stimato a partire dalla successiva misurazione del fondo di radiazione ambientale. I conteggi acquisiti per \SI{600}{s} hanno infine permesso una stima con incertezza compresa tra il $5\%$ e il $64\%$ (nel caso dei raggi cosmici) della radioattività ambientale, di quella dovuta ai raggi cosmici e di quella di un blocco di tufo.
@@ -499,6 +499,25 @@ A titolo di approfondimento, abbiamo scritto un programma in \emph{C}, riportato
 \end{tabular}
 \end{table}
 
+\begin{figure}[H]
+\caption{Conteggi registrati per i bin con pallinometro orizzontale e $33$ file di chiodi}
+\label{fig:palli_orizzontale_33}
+\centering
+\includegraphics[scale=0.5]{pallinometro_dritto_foro1.png}
+\end{figure}
+\begin{figure}[H]
+\caption{Conteggi registrati per i bin con pallinometro orizzontale e $25$ file di chiodi}
+\label{fig:palli_orizzontale_25}
+\centering
+\includegraphics[scale=0.55]{pallinometro_dritto_foro2.png}
+\end{figure}
+\begin{figure}[H]
+\caption{Conteggi registrati per i bin con pallinometro orizzontale e $17$ file di chiodi}
+\label{fig:palli_orizzontale_17}
+\centering
+\includegraphics[scale=0.59]{pallinometro_dritto_foro3.png}
+\end{figure}
+
 
 
 \begin{table}[H]
@@ -547,6 +566,24 @@ A titolo di approfondimento, abbiamo scritto un programma in \emph{C}, riportato
 \end{tabular}
 \end{table}
 
+\begin{figure}[H]
+\caption{Conteggi registrati per i bin con pallinometro inclinato e $33$ file di chiodi}
+\label{fig:palli_inclinato_33}
+\centering
+\includegraphics[scale=0.9]{pallinometro_inclinato_foro1.png}
+\end{figure}
+\begin{figure}[H]
+\caption{Conteggi registrati per i bin con pallinometro inclinato e $25$ file di chiodi}
+\label{fig:palli_inclinato_25}
+\centering
+\includegraphics[scale=0.9]{pallinometro_inclinato_foro2.png}
+\end{figure}
+\begin{figure}[H]
+\caption{Conteggi registrati per i bin con pallinometro inclinato e $17$ file di chiodi}
+\label{fig:palli_inclinato_17}
+\centering
+\includegraphics[scale=0.9]{pallinometro_inclinato_foro3.png}
+\end{figure}
 
 
 \begin{table}[H]
@@ -642,6 +679,53 @@ A titolo di approfondimento, abbiamo scritto un programma in \emph{C}, riportato
    \hline
 \end{tabular}
 \end{table}
+
+\begin{figure}[H]
+\caption{Simulazione con \emph{Palli2000} del pallinometro orizzontale con $33$ file di chiodi}
+\label{fig:palli2000_orizzontale_33}
+\centering
+\includegraphics[scale=0.5]{palli2000_orizz_1.eps}
+\end{figure}
+\begin{figure}[H]
+\caption{Simulazione con \emph{Palli2000} del pallinometro orizzontale con $25$ file di chiodi}
+\label{fig:palli2000_orizzontale_25}
+\centering
+\includegraphics[scale=0.5]{palli2000_orizz_2.eps}
+\end{figure}
+\begin{figure}[H]
+\caption{Simulazione con \emph{Palli2000} del pallinometro orizzontale con $17$ file di chiodi}
+\label{fig:palli2000_orizzontale_17}
+\centering
+\includegraphics[scale=0.5]{palli2000_orizz_3.eps}
+\end{figure}
+
+
+
+\begin{figure}[H]
+\caption{Simulazione con \emph{Palli2000} del pallinometro inclinato con $33$ file di chiodi}
+\label{fig:palli2000_inclinato_33}
+\centering
+\includegraphics[scale=0.5]{palli200_inclinato_1.eps}
+\end{figure}
+\begin{figure}[H]
+\caption{Simulazione con \emph{Palli2000} del pallinometro inclinato con $25$ file di chiodi}
+\label{fig:palli2000_inclinato_25}
+\centering
+\includegraphics[scale=0.5]{palli200_inclinato_2.eps}
+\end{figure}
+\begin{figure}[H]
+\caption{Simulazione con \emph{Palli2000} del pallinometro inclinato con $17$ file di chiodi}
+\label{fig:palli2000_inclinato_17}
+\centering
+\includegraphics[scale=0.5]{palli200_inclinato_3.eps}
+\end{figure}
+
+\begin{figure}[H]
+\caption{Simulazione con C di un pallinometro con distribuzione gaussiana della probabilità di cadere a destra per ogni chiodo}
+\label{}
+\centering
+\includegraphics[scale=0.5]{lollo.eps}
+\end{figure}
 
 \begin{codice_c}[caption={Simulazione di un pallinometro con distribuzione gaussiana della probabilità di cadere a destra per ogni chiodo}, label={list:codice}][H]
 #include <stdio.h>
