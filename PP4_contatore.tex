@@ -102,6 +102,22 @@ Interessandoci invece al tempo di attesa per rilevare una particella radioattiva
 P(T > \Delta t) = e^{-\Delta t / \tau},
 \]
 ove il rapporto $\Delta t / \tau$ è pari al parametro $\lambda$ della precedente distribuzione di Poisson, e si è introdotto il parametro $\tau = 1 / R$ quale previsione del tempo di attesa prima che si verifichi il primo conteggio. 
+
+A partire dalle misure sperimentali è possibile inferire il parametro $\lambda$ della distribuzione che descrive (nel nostro modello) il decadimento radioattivo: per intervalli di tempo brevi ($\Delta t < \SI{5}{s}$) il numero di conteggi sarebbe troppo basso per rendere legittima l'approssimazione gaussiana della poissoniana, però, avendo fatto $N = 50$ misure tra loro equivalenti, è legittimo considerare le $N$ misure dell'intervallo $\Delta t$ come un'unica misura di un intervallo $N \Delta t$, il numero di conteggi diventa quindi $\sum_{i=1}^N x_i$ (con $x_i$ il numero di conteggi nella misura $i$-esima) e di conseguenza l'approssimazione gaussiana diventa legittima. Invertendo la gaussiana che ora descrive il nostro modello si ottiene la distribuzione del parametro $\lambda$:
+\begin{equation}\label{eq:distribuzione_lambda}
+	\lambda[\Delta t]  \sim \mathscr{N} \left( \frac{\sum_{i=1}^N x_i}{N} , \frac{\sqrt{\sum_{i=1}^N x_i}}{N} \right) = \mathscr{N} \left( \bar{x}, \sqrt{\frac{\bar{x}}{N}} \right)
+\end{equation}
+dove $x_i$ è, come prima, il numero di conteggi nella $i$-esima misura. Da questa distribuzione segue quella del \emph{rate} della distribuzione:
+\begin{equation}\label{eq:distribuzione_r}
+	r \sim \mathscr{N} \left( \frac{\bar{x}}{\Delta t}, \sqrt{\frac{\bar{x}}{(\Delta t)^2 N}} \right),
+\end{equation}
+per cui la migliore stima di $r$ è
+\begin{equation}\label{eq:stima_r}
+	r = \mathrm{E}[r] \pm \sigma [r]
+\end{equation} dove
+\[
+	\mathrm{E}[r] = \frac{\bar{x}}{\Delta t}, \qquad \sigma [r] = \sqrt{\frac{\bar{x}}{(\Delta t)^2 N}}.
+\]
 \paragraph{Studio di un pallinometro}
 Il pallinometro è uno strumento utilizzato per verificare le proprietà della distribuzione binomiale, in cui alcune sferette vengono inserite in cima ad esso e, dopo aver colpito $N-1$ file di chiodi con probabilità $p$ di andare dopo l'urto a destra e con probabilità $1-p$ di andare invece a sinistra, cadono all'interno di $N$ cellette. Studiamo l'andamento della distribuzione delle palline sia utilizzando un pallinometro fisico sia una simulazione via software.
 
@@ -133,26 +149,35 @@ Utilizziamo il contatore Geiger-Müller in modalità \textbf{scaler}, in cui si ac
 
 Il numero di conteggi per i diversi intervalli di tempo è riportato in tabella~\ref{tab:conteggi_tempo} e negli istogrammi di figura~\ref{fig:istogramma_deltat1}, \ref{fig:istogramma_deltat2}, \ref{fig:istogramma_deltat3}, \ref{fig:istogramma_deltat4} e \ref{fig:istogramma_deltat5}.
 
-Per quanto detto nella sezione~\ref{sec:descrizione}, stimiamo i parametri $\lambda_i$ della distribuzione di Poisson relativa ai diversi intervalli temporali calcolando il valor medio del numero di conteggi acquisiti per i diversi $\Delta t_i$. A tali stime associamo come incertezza la deviazione standard della media, ossia la deviazione standard divisa per $\sqrt{50}$. Riportiamo le stime di $\lambda_i$ in tabella~\ref{tab:lambda_conteggi}.
-
+Per quanto detto nella sezione~\ref{sec:descrizione}, stimiamo i parametri $\lambda_i$ della distribuzione di Poisson relativa ai diversi intervalli temporali calcolando il valor medio del numero di conteggi acquisiti per i diversi $\Delta t_i$. A tali stime associamo come incertezza il secondo parametro della distribuzione (\ref{eq:distribuzione_lambda}). Da queste stime, utilizzando la distribuzione descritta in (\ref{eq:distribuzione_r}), seguono le stime dei relativi tassi di conteggio con relative incertezze: riportiamo le stime di $\lambda_i$  e di $r$ in tabella~\ref{tab:lambda_r_conteggi}.
 \begin{table}[ht]
-\caption{Stime dei parametri $\lambda$ della distribuzione di Poisson}
-\label{tab:lambda_conteggi}
+\caption{Stime di $\lambda$ e di $r$ per diversi intervalli temporali}
+\label{tab:lambda_r_conteggi}
 \centering
-\begin{tabular}{ccc}
+\begin{tabular}{c|cc|cc}
 \toprule
-Intervallo & $\lambda$ & $\sigma_{\lambda}$ \\
+Intervallo [\SI{}{s}] & $\lambda$ & $\sigma_{\lambda}$ & $r$ & $\sigma_{r}$ \\
 \hline 
-$\Delta t_1$ & 0.80  & 0.02 \\ 
-$\Delta t_2$ & 1.94  & 0.03 \\
-$\Delta t_3$ & 3.34  & 0.04 \\
-$\Delta t_4$ & 3.72  & 0.04 \\
-$\Delta t_5$ & 10.64 & 0.07 \\
+$\Delta t_1 = 1$ & 0.80  & 0.13 & 0.80 & 0.13\\ 
+$\Delta t_2 = 2$ & 1.9  & 0.2 & 0.97 & 0.10\\
+$\Delta t_3 = 3$ & 3.3  & 0.3  & 1.11 & 0.09\\
+$\Delta t_4 = 4$ & 3.7  & 0.3 & 0.93 & 0.07\\
+$\Delta t_5 = 10$ & 10.6 & 0.5 & 1.06 & 0.04\\
 \bottomrule
 \end{tabular}
 \end{table}
+I tassi di conteggio al secondo risultano compatibili a meno di inevitabili fluttuazioni statistiche, ma possiamo migliorare la stima di $r$ combinando tutte le misure prese: è legittimo considerare le $5 N = 250$ misure di conteggio relative a diversi intervalli temporali come un'unica misura di un intervallo di tempo $\Delta t = N ( \Delta t_1 + \Delta t_2 + \Delta t_3 + \Delta t_4 + \Delta t_5)$ con numero di conteggi associato pari a alla somma di tutti i conteggi, in questo modo il parametro $r_\mathrm{best}$ si stima come
+\begin{equation}\label{eq:stima_r_tot}
+	r_\mathrm{best} = \mathrm{E}[r_\mathrm{best}] \pm \sigma [r_\mathrm{best}]
+\end{equation} dove
+\[
+	\mathrm{E}[r_\mathrm{best}] = \frac{x_{\mathrm{tot}} +1}{\Delta t} \approx \frac{x_{\mathrm{tot}}}{\Delta t}, \quad \sigma[r_\mathrm{best}] = \frac{\sqrt{x_{\mathrm{tot}} +1}}{\Delta t} \approx  \frac{\mathrm{E}[r_\mathrm{best}]}{\Delta t},
+\] svolgendo i conti segue che la miglior stima del tasso di conteggio nelle condizioni in cui si è svolta l'esperienza è 
+\[
+	\boxed{\textbf{$r_\mathrm{best}$ = {\SI{1.022 \pm 0,001}{\frac{conteggi}{s}}}}}.
+\]
 
-Sovrapponendo a ciascun istogramma l'andamento atteso per una distribuzione di Poisson con parametro $\lambda_i$ notiamo che entro le barre di incertezza i dati sono compatibili. Inoltre osserviamo che all'aumentare del tempo di osservazione l'andamento della distribuzione delle frequenze dei conteggi tende alla distribuzione gaussiana, dalla caratteristica simmetria già parzialmente visibile per $\Delta t_5 = \SI{10}{s}$. Le barre di incertezza hanno lunghezza data dalla radice del numero di conteggi, e sono state attribuite ai punti teorici invece che al numero di conteggi in quanto l'esperienza condotta si pone lo scopo di risalire alla forma della distribuzione a partire dal numero (noto) di conteggi, e infatti il parametro della distribuzione di Poisson che rappresenta l'andamento teorico è stato stimato proprio dai valori sperimentali.
+Sovrapponendo a ciascun istogramma l'andamento atteso per una distribuzione di Poisson con parametro $\lambda_i = r_{\mathrm{best}} \Delta t_i$ notiamo che entro le barre di incertezza i dati sono compatibili quasi ovunque. Inoltre osserviamo che all'aumentare del tempo di osservazione l'andamento della distribuzione delle frequenze dei conteggi tende alla distribuzione gaussiana, dalla caratteristica simmetria già parzialmente visibile per $\Delta t_5 = \SI{10}{s}$. Le barre di incertezza hanno lunghezza data dalla radice del numero di conteggi, e sono state attribuite ai punti teorici invece che al numero di conteggi in quanto l'esperienza condotta si pone lo scopo di risalire alla forma della distribuzione a partire dal numero (noto) di conteggi, e infatti il parametro della distribuzione di Poisson che rappresenta l'andamento teorico è stato stimato proprio dai valori sperimentali.
 
 Escludendo il set di dati relativo a $\Delta t_5$, calcoliamo la frazione di $0$ conteggi e di $0$ o $1$ conteggio, riportata in tabella~\ref{tab:0e01conteggi}. Introduciamo il parametro $\tau = 1/R$ indicante la previsione del tempo di attesa prima che si verifichi il primo conteggio. Per quanto riguarda la prima frazione, essa ci permette di stimare l'andamento della probabilità che il primo conteggio si verifichi dopo un intervallo di tempo $\Delta t$, ed equivale alla differenza tra $1$ e la funzione di ripartizione del tempo di attesa per un conteggio, ossia
 \[
@@ -250,7 +275,7 @@ r_T = \frac{\hat{\lambda}_T}{\Delta t} = \SI{1.25 \pm 0.07}{s^{-1}}.
 Le incertezze, data la trascurabilità di quella sul tempo, sono state ottenute dividendo quelle del parametro di Poisson per l'intervallo di tempo.
 Notiamo che le incertezze relative sono maggiori del $5\%$ e, nel caso dei raggi cosmici, arrivano a superare il $63\%$: riteniamo che questo sia dovuto al fatto che abbiamo eseguito una sola misurazione della radiazione e compiuto l'analisi di un solo dato; riteniamo che avendo preso la media di più misurazioni l'incertezza sarebbe diminuita. Inoltre sottolineiamo che non abbiamo considerato il possibile rumore elettronico del contatore Geiger-Müller, che potrebbe aver influito sul conteggio di alcuni eventi non realmente rilevati.
 
-Per confronto con la prima parte di questa sezione dedicata al conteggio di fenomeni di radiazione, notiamo che dalle misure riportate nella tabella~\ref{tab:lambda_conteggi} possiamo estrarre un \emph{rate} medio per la radiazione di fondo, comprendente quella ambientale e i raggi cosmici, pari a $R = \SI{0.98 \pm 0.12}{s^{-1}}$, con incertezza data dalla deviazione standard dei valori del rate ricavati dalla tabella indicata ($R = \lambda / \Delta t$). Questo valore è compatibile entro un sigma con quello ricavato poco sopra, dunque possiamo concludere che i risultati ottenuti misurando la radiazione per intervalli inferiori o uguali a \SI{10}{s} siano in accordo con quelli ottenuti con l'intervallo temporale di \SI{600}{s}, in quanto la distribuzione di probabilità sottostante al fenomeno è la stessa.
+Per confronto con la prima parte di questa sezione dedicata al conteggio di fenomeni di radiazione, notiamo che dalle misure riportate nella tabella~\ref{tab:lambda_r_conteggi} possiamo estrarre un \emph{rate} medio per la radiazione di fondo, comprendente quella ambientale e i raggi cosmici, pari a $R = \SI{0.98 \pm 0.12}{s^{-1}}$, con incertezza data dalla deviazione standard dei valori del rate ricavati dalla tabella indicata ($R = \lambda / \Delta t$). Questo valore è compatibile entro un sigma con quello ricavato poco sopra, dunque possiamo concludere che i risultati ottenuti misurando la radiazione per intervalli inferiori o uguali a \SI{10}{s} siano in accordo con quelli ottenuti con l'intervallo temporale di \SI{600}{s}, in quanto la distribuzione di probabilità sottostante al fenomeno è la stessa.
 
 
 \subsection{Pallinometro}\label{sec:pallinometro}
@@ -402,35 +427,35 @@ A titolo di approfondimento, abbiamo scritto un programma in \emph{C}, riportato
 \caption{Numero di conteggi per l'intervallo di tempo $\Delta t_1 = \SI{1}{s}$}
 \label{fig:istogramma_deltat1}
 \centering
-\includegraphics[scale=0.5]{1s.eps}
+\includegraphics[scale=0.7]{st_uno_nuovo.eps}
 \end{figure}
 
 \begin{figure}[H]
 \caption{Numero di conteggi per l'intervallo di tempo $\Delta t_2 = \SI{2}{s}$}
 \label{fig:istogramma_deltat2}
 \centering
-\includegraphics[scale=0.5]{2s.eps}
+\includegraphics[scale=0.7]{ist_due_nuovo.eps}
 \end{figure}
 
 \begin{figure}[H]
 \caption{Numero di conteggi per l'intervallo di tempo $\Delta t_3 = \SI{3}{s}$}
 \label{fig:istogramma_deltat3}
 \centering
-\includegraphics[scale=0.5]{3s.eps}
+\includegraphics[scale=0.7]{ist_tre_nuovo.eps}
 \end{figure}
 
 \begin{figure}[H]
 \caption{Numero di conteggi per l'intervallo di tempo $\Delta t_4 = \SI{4}{s}$}
 \label{fig:istogramma_deltat4}
 \centering
-\includegraphics[scale=0.5]{4s.eps}
+\includegraphics[scale=0.7]{Ist_quattro_nuovo.eps}
 \end{figure}
 
 \begin{figure}[H]
 \caption{Numero di conteggi per l'intervallo di tempo $\Delta t_5 = \SI{10}{s}$}
 \label{fig:istogramma_deltat5}
 \centering
-\includegraphics[scale=0.5]{10s.eps}
+\includegraphics[scale=0.7]{ist_cinque_nuovo.eps}
 \end{figure}
 
 %===============CONTEGGI INTEGRALI
