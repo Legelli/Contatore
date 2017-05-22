@@ -205,12 +205,12 @@ $\Delta t_5 = 10$ & 8.504 & 0.99\\
 I risultati del test mostrano che i dati sperimentali sono ben compatibili con il modello di una poissoniana: il risultato migliore si è avuto, com'era prevedibile, con la misura nell'intervallo di tempo più grande. I valori piuttosto bassi ottenuti per gli altri intervalli (eccezion fatta per $\Delta t_2$) sono giustificati se si ricorda che il test del $\chi^2$ è significativo per misure in cui sono stati rilevati un numero considerevole di eventi (almeno maggiore di 30), per cui l'unico test effettivamente significativo è quello con $\Delta t = \SI{10}{s}$. 
 
 \paragraph{Rappresentazione della funzione di verosimiglianza}
-Per calcolare la funzione verosimiglianza del tasso di conteggio per i tre diversi intervalli temporali $\Delta T1= \SI{1}{s}$,$\Delta T2= \SI{4}{s}$$\Delta T3= \SI{600}{s}$, combiniamo le $n$ misure di conteggio moltiplicando la densità  di probabilità  del tasso di conteggio $r$ di ogni singola misura, ottenuta applicando il procedimento bayesiano. La funzione cercata sarà  quindi, a meno di fattori moltiplicativi di normalizzazione:
+Per calcolare la funzione di verosimiglianza del tasso di conteggio per i tre diversi intervalli temporali $\Delta t_1= \SI{1}{s}$, $\Delta t_2= \SI{4}{s}$, $\Delta t_3= \SI{600}{s}$, combiniamo le $n$ misure di conteggio moltiplicando la densità  di probabilità del tasso di conteggio $r$ di ogni singola misura, ottenuta applicando il procedimento bayesiano. La funzione cercata sarà quindi, a meno di fattori moltiplicativi di normalizzazione:
 \begin{equation}\label{eq:verosimiglianzatempiuguali}
 f(\lambda|x) \propto \lambda^{ \sum_{i}x_i}\cdot e^{n\lambda}
 \end{equation}
 Dove $n$ è il numero di osservazioni di ciascun gruppo e $x_i$ sono i conteggi dell'osservazione $i$-esima.
-I grafici \ref{fig:verosimiglianza1sec}, \ref{fig:verosimiglianza4sec}, \ref{fig:verosimiglianza600sec} realizzati con il software di analisi dati \emph{R}, rappresentano le funzioni di verosimiglianza, non normalizzate, rispettivamente per gli intervalli temporali $\Delta T1= \SI{1}{s}$,$\Delta T2= \SI{4}{s}$ e $\Delta T3= \SI{600}{s}$. Notiamo che i punti di massimo di tali funzioni sono vicini tra di loro e la sovrapposizione delle tre funzioni di verosimiglianza è significativa, indicando che le tre misure indipendenti sono tra di loro compatibili.
+I grafici \ref{fig:verosimiglianza1sec}, \ref{fig:verosimiglianza4sec}, \ref{fig:verosimiglianza600sec} rappresentano le funzioni di verosimiglianza, non normalizzate, rispettivamente per gli intervalli temporali $\Delta t_1= \SI{1}{s}$, $\Delta t_2= \SI{4}{s}$ e $\Delta t_3= \SI{600}{s}$. Notiamo che i punti di massimo di tali funzioni sono vicini tra di loro e la sovrapposizione delle tre funzioni di verosimiglianza è significativa, indicando che le tre misure indipendenti sono tra di loro compatibili.
 Per quanto riguarda la combinazione di tutte le misure, poiché stiamo studiando uno stesso fenomeno ma osservato in diversi intervalli temporali, la funzione, a meno di fattori moltiplicativi è data da: 
 \begin{equation}\label{eq:verosimiglianzatempidiversi}
 f(r|x) \propto r^{\sum_{i}x_i} \cdot e^{-r\sum_{i}T_i}
@@ -223,7 +223,7 @@ Escludendo il set di dati relativo a $\Delta t_5$, calcoliamo la frazione di $0$
 \[
 F(\Delta t) = e^{-\frac{\Delta t}{\tau}} = e^{-R\Delta t}.
 \]
-Sovrapponiamo dunque al grafico, in figura~\ref{fig:0conteggi}, delle frazioni di $0$ conteggi in funzione di $\Delta t$ l'andamento aspettato previsto dalla distribuzione esponenziale dei tempi di attesa, descritto dalla equazione precedente, dove abbiamo utilizzato come \emph{rate} quella estratta nella successiva sezione~\ref{subsec:10minuti} a partire dai conteggi con contatore orizzontale per il fondo. Come incertezza notiamo che l'errore qui associato è di tipo binomiale, poichà© consideriamo come \emph{successo} il numero di conteggi pari a $0$ e \emph{insuccesso} l'evento complementare. Pertanto, si ha
+Sovrapponiamo dunque al grafico, in figura~\ref{fig:0conteggi}, delle frazioni di $0$ conteggi in funzione di $\Delta t$ l'andamento aspettato previsto dalla distribuzione esponenziale dei tempi di attesa, descritto dalla equazione precedente, dove abbiamo utilizzato come \emph{rate} quella estratta nella successiva sezione~\ref{subsec:10minuti} a partire dai conteggi con contatore orizzontale per il fondo. Come incertezza notiamo che l'errore qui associato è di tipo binomiale, poiché consideriamo come \emph{successo} il numero di conteggi pari a $0$ e \emph{insuccesso} l'evento complementare. Pertanto, si ha
 \begin{equation}\label{eq:errorbarsgeiger}
 \sigma_{\text{$0$ conteggi}} = \sqrt{\frac{p\cdot(1-p)}{N}},
 \end{equation}
@@ -235,7 +235,17 @@ G(\Delta t) = e^{-\frac{\Delta t}{\tau}} + \frac{\Delta t}{\tau} e^{-\frac{\Delt
 \]
 Riportiamo anche in questo caso i valori ottenuti nel grafico di figura~\ref{fig:0+1conteggi}, sovrapponendo l'andamento atteso descritto dalla funzione $G(\Delta t)$, utilizzando come \emph{rate} la medesima utilizzata precedentemente, e ricordando la relazione $\tau = 1 / R$. Le incertezze sono state calcolate con la stessa equazione~\ref{eq:errorbarsgeiger}, utilizzando ancora come probabilità  $p$ la frequenza relativa dei casi con $0$ e con $1$ conteggio, derivante dal fatto che l'errore sia ancora di tipo binomiale, considerando come \emph{successo} il numero di conteggi pari a $0$ o $1$. Anche in questo caso l'incertezza è rappresentata con le barre di errore.
 
-Notiamo infine che entro le barre di incertezza le nostre misure sono compatibili con la distribuzione teorica prevista per i tempi di attesa.
+Notiamo che entro le barre di incertezza le nostre misure sono compatibili con la distribuzione teorica prevista per i tempi di attesa. Calcoliamo dunque il chi quadro per quantificare tale compatibilità, utilizzando nel primo caso l'equazione
+\[
+\chi^2 = \sum_{i = 1}^4 \frac{\big(f_0(\Delta t_i) - Np_i\big)^2}{Np_i(1-p_i)} = \sum_{i = 1}^4 \frac{\big(f_0(\Delta t_i) - N\cdot e^{-r_{\text{best}}\Delta t_i}\big)^2}{Ne^{-r_{\text{best}}\Delta t_i}(1-e^{-r_{\text{best}}\Delta t_i})}
+\]
+dove con $f_0(\Delta t_i)$ abbiamo indicato la frazione di $0$ conteggi relativa all'intervallo di tempo $\Delta t_i$. Otteniamo il valore $\chi^2 = 1.77$ per i dati relativi alla frazione di $0$ conteggi.
+
+Allo stesso modo, nel caso di $0+1$ conteggi utilizziamo l'equazione
+\[
+\chi^2 = \sum_{i = 1}^4 \frac{\big(f_{0+1}(\Delta t_i) - Np_i\big)^2}{Np_i(1-p_i)} = \sum_{i = 1}^4 \frac{\left(f_{0+1}(\Delta t_i) - N\cdot e^{-r_{\text{best}}\Delta t_i}(1+r_{\text{best}}\Delta t)\right)^2}{Ne^{-r_{\text{best}}\Delta t_i}(1+r_{\text{best}}\Delta t)\big(1-e^{-r_{\text{best}}\Delta t_i}(1+r_{\text{best}}\Delta t)\big)}
+\]
+e ricaviamo $\chi^2 = 4.51$.
 
 \begin{table}[ht]
 \caption{Frazione di $0$ e di $0+1$ conteggi negli intervalli tra $1$ e \SI{4}{s}}
@@ -328,7 +338,7 @@ Per confronto con la prima parte di questa sezione dedicata al conteggio di feno
 Supponiamo di lasciar cadere una sferetta ideale di massa non nulla in uno strumento (anch'esso ideale) come quello in figura \ref{fig:pallinometro}: per ogni riga la sfera urterà  perfettamente verticale un chiodo (punti verdi della figura) e cadrà  con uguale probabilità  a destra o a sinistra terminando la caduta in una delle colonne sul fondo dello strumento; supponiamo quindi di ripetere l'esperienza $N$ volte: è di interesse discutere la modalità  con cui le $N$ sfere si distribuiranno nelle colonne. Lo strumento appena descritto è chiamato (a seguito del suo ideatore) \emph ``quinconce di Galton"\footnote{Per ``quinconcè' si intende il simbolo usato dai Romani per indicare la frazione $5/12$, simbolo che ricorda la disposizione dei chiodi dello strumento; volgarmente quest'ultimo è ricordato come ``pallinometro''.} ed ha le seguenti caratteristiche:
 \begin{itemize}
 	\item ogni collisione (da ora in poi chiamata \emph{evento}) ha esclusivamente due modalità  di manifestarsi, in quanto la pallina cade o a sinistra o a destra;
-	\item il numero di eventi è discreto e finito, essendoci un evento per ogni riga\footnote{La distanza tra due righe è scelta appositamente affinchà© avvenga questo.};
+	\item il numero di eventi è discreto e finito, essendoci un evento per ogni riga\footnote{La distanza tra due righe è scelta appositamente affinché avvenga questo.};
 	\item la probabilità  che la pallina cada a destra (o a sinistra) è esattamente identica\footnote{Ricordando che si tratta di un \emph{gedankenexperiment}.} per ogni chiodo e rimane costante nel tempo.
 \end{itemize} Nel complesso, il singolo evento di urto della pallina con un chiodo è schematizzato da un \emph{processo di Bernoulli} e l'esito dell'esperimento è descritto da una distribuzione binomiale\footnote{In realtà , la successione logica con la quale sono stati presentati gli argomenti di questa sezione è stata invertita: storicamente, Galton ha ideato questa esperienza proprio per valutare l'efficacia della distribuzione binomiale, la quinconce non ha altro scopo.}: ci aspettiamo, infatti, di trovare nell'$i-$esimo bin un numero di sfere pari a 
 \begin{align}\label{eq:palli_E}
@@ -342,7 +352,7 @@ Nel caso di una quinconce ideale, la probabilità  di cadere da una delle due par
 	\vec{E}(i, N, C) = \begin{pmatrix} C+1 \\ i \end{pmatrix} \left(\frac{1}{2}\right)^{C+1}.
 \end{equation}
 
-Supponendo realisticamente invece che la probabilità  non sia equivalente (per via di eventuali inclinazioni, per esempio) si avrà  una distribuzione non simmetrica descritta da una binomiale $\mathscr{B}_{N, p}$ dove la probabilità  è il valore atteso della distribuzione delle frequenze relative, cioà©
+Supponendo realisticamente invece che la probabilità  non sia equivalente (per via di eventuali inclinazioni, per esempio) si avrà  una distribuzione non simmetrica descritta da una binomiale $\mathscr{B}_{N, p}$ dove la probabilità  è il valore atteso della distribuzione delle frequenze relative, cioé
 \begin{equation}\label{eq:palli_P_vero}
 	 p = \frac{1}{C} \sum_{x=0}^{C} x \frac{N_x}{N}
 \end{equation} dove con $N_x$ si è inteso il numero di palline registrate nell'$x-$esimo bin (contandoli a partire dal primo teoricamente raggiungibile).
@@ -368,7 +378,7 @@ Inclinando leggermente verso destra la quinconce e ripetendo le misure si otteng
 \end{align*}
 Come ragionevolmente previsto, la distribuzione è leggermente spostata verso destra. Lo spostamento va relazionato a quello ottenuto con la quinconce in orizzontale, infatti l'inclinazione subita dal pallinometro è stata tale da spostare la percentuale di circa $10$ punti, e non solo di $3$ come una prima interpretazione potrebbe lasciar fraintendere.
 
-Notiamo inoltre che il dato corrispondente al bin$-31$ nella seconda misura con lo strumento inclinato, misura riportata nella seconda colonna della tabella \ref{tab:palli_inclinato}, risulta essere incompatibile con l'esperimento: il caso limite in cui la pallina fosse sempre caduta verso destra (quindi $C_2 = 25$ successi) avrebbe portato la pallina a cadere nel bin$-29$ che quindi risultava essere l'ultimo bin teoricamente raggiungibile. Riteniamo che la causa dell'incongruenza sia dovuta ad un'eccessiva inclinazione dello strumento, la quale ha portato alcune palline a compiere più di un passo verso destra senza collidere con alcun chiodo, falsando quindi la misura. Poichà©, però, le probabilità  calcolate risultano consistenti e l'evento spurio è isolato, riteniamo che il fenomeno sia stato un evento piuttosto raro e che, quindi, non abbia influito significativamente  sulla distribuzione. 
+Notiamo inoltre che il dato corrispondente al bin$-31$ nella seconda misura con lo strumento inclinato, misura riportata nella seconda colonna della tabella \ref{tab:palli_inclinato}, risulta essere incompatibile con l'esperimento: il caso limite in cui la pallina fosse sempre caduta verso destra (quindi $C_2 = 25$ successi) avrebbe portato la pallina a cadere nel bin$-29$ che quindi risultava essere l'ultimo bin teoricamente raggiungibile. Riteniamo che la causa dell'incongruenza sia dovuta ad un'eccessiva inclinazione dello strumento, la quale ha portato alcune palline a compiere più di un passo verso destra senza collidere con alcun chiodo, falsando quindi la misura. Poiché, però, le probabilità  calcolate risultano consistenti e l'evento spurio è isolato, riteniamo che il fenomeno sia stato un evento piuttosto raro e che, quindi, non abbia influito significativamente  sulla distribuzione. 
 
 \subsubsection{Pallinometro simulato}
 Attraverso il software \emph{Palli2000} in dotazione, simuliamo la caduta di $N = 10^6$ palline nelle condizioni teoriche descritte all'inizio della sezione \ref{sec:pallinometro} utilizzando come probabilità  di \emph{successo} quella teorica di $0.5$, si confrontano quindi i risultati con quelli sperimentali. Si riportano nei grafici \ref{fig:palli2000_orizzontale_33}, \ref{fig:palli2000_orizzontale_25}, \ref{fig:palli2000_orizzontale_17} le frequenze simulate con \emph{Palli2000} confrontate con quelle dei dati sperimentali: com'era prevedibile, i dati simulati seguono una distribuzione gaussiana (in quanto la binomiale tende ad una gaussiana per $N \rightarrow + \infty$), ma sono ugualmente coerenti con i dati ottenuti sperimentalmente.
