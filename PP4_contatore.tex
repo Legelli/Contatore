@@ -184,25 +184,25 @@ Per valutare se i dati sperimentali risultano in accordo con il modello teorico,
 \begin{equation}\label{eq:chi2}
 	\chi^2 = \sum_{i=1}^{N_\mathrm{bin}} \frac{(n_i - N p_i)^2}{N p_i ( 1 - p_i)}
 \end{equation}
-dove $N = 50$ è il numero di misure prese, $n_i$ il numero di conteggi nell'$i$-esimo bin e $p_i$ la probabilità  rispetto all'$i$-esimo bin data da una distribuzione di Poisson di \emph{rate} pari a $r_{\mathrm{best}}$ calcolata nel punto centrale del bin: affinché il test risulti valido è necessario che $Np_i$ sia sufficientemente grande, in modo da poter approssimare la distribuzione ad una gaussiana, a tal fine quando la probabilità  del bin è minore di $0.1$ si considera un bin più largo dato dall'unione di due (o più) bin contigui, il numero di conteggi diventa quindi la somma di quelli nei rispettivi bin e la probabilità  diventa la somma delle rispettive probabilità . I valori del $\chi^2$ per ciascun istogramma sono riportati in tabella \ref{tab:chi2}, nell'ultima colonna sono riportati i gradi di fiducia che la distribuzione sperimentale provenga da una distribuzione di Poisson di parametro noto (il grado di fiducia coincide con la probabilità  di ottenere un $\chi^2$ maggiore ripetendo l'esperimento; la distribuzione usata è quella del $\chi^2$ con numero di gradi di libertà  pari al numero di bin\footnote{Infatti la distribuzione di conteggi non ha alcun vincolo formale.}).
+dove $N = 50$ è il numero di misure prese, $n_i$ il numero di conteggi nell'$i$-esimo bin e $p_i$ la probabilità  rispetto all'$i$-esimo bin data da una distribuzione di Poisson di \emph{rate} pari a $r_{\mathrm{best}}$ calcolata nel punto centrale del bin: affinché il test risulti valido è necessario che $Np_i$ sia sufficientemente grande, in modo da poter approssimare la distribuzione ad una gaussiana, a tal fine quando la probabilità  del bin è minore di $0.1$ si considera un bin più largo dato dall'unione di due (o più) bin contigui, il numero di conteggi diventa quindi la somma di quelli nei rispettivi bin e la probabilità  diventa la somma delle rispettive probabilità . I valori del $\chi^2$ per ciascun istogramma sono riportati in tabella \ref{tab:chi2}, nella terza colonna sono riportati i gradi di libertà di ciascuna distribuzione (considerando come $\nu$ il numero di bin dopo l'accorpamento) e nell'ultima la probabilità che il $\mathrm{Chi}^2$ effettivo sia maggiore o uguale a quello misurato.
 \begin{table}[t]
 \caption{Test del $\mathrm{Chi}^2$ sui conteggi di radioattività }
 \label{tab:chi2}
 \centering
-\begin{tabular}{ccc}
+\begin{tabular}{cccc}
 \toprule
-Intervallo [\SI{}{s}] & $\chi^2$ & p\\
+Intervallo [\SI{}{s}] & $\chi^2$ & $\nu$ & p\\
 \hline 
-$\Delta t_1 = 1$ &  3.224 & 0.86\\  %Bisogna rifare i conti per tutti gli intervalli (eccetto per l'ultimo)
-$\Delta t_2 = 2$ & 1.425 & 0.98\\
-$\Delta t_3 = 3$ & 3.856 & 0.85\\
-$\Delta t_4 = 4$ & 6.146 & 0.80\\
-$\Delta t_5 = 10$ & 8.504 & 0.99\\
+$\Delta t_1 = 1$ &  3.880 & 4 & 0.42\\  
+$\Delta t_2 = 2$ & 1.499 & 6& 0.96\\
+$\Delta t_3 = 3$ & 6.705 & 6& 0.35\\
+$\Delta t_4 = 4$ & 9.716 & 6& 0.13\\
+$\Delta t_5 = 10$ & 13.214 & 11&  0.28\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-I risultati del test mostrano che i dati sperimentali sono ben compatibili con il modello di una poissoniana: il risultato migliore si è avuto, com'era prevedibile, con la misura nell'intervallo di tempo più grande. I valori piuttosto bassi ottenuti per gli altri intervalli (eccezion fatta per $\Delta t_2$) sono giustificati se si ricorda che il test del $\chi^2$ è significativo per misure in cui sono stati rilevati un numero considerevole di eventi (almeno maggiore di 30), per cui l'unico test effettivamente significativo è quello con $\Delta t = \SI{10}{s}$. 
+I risultati del test mostrano che i dati sperimentali sono compatibili con il modello di una poissoniana: l'ipotesi nulla si sarebbe dovuta scartare nel caso di un valore di $p$ minore o uguale dello $\SI{0.05}{}$, nel nostro caso i risultati sono tutti distanti da questa soglia. Il risultato migliore si ottiene nell'intervallo di $\SI{2}{s}$: guardando anche la sovrapposizione della curva sull'istogramma (figura \ref{fig:istogramma_deltat2}) si nota come i dati sperimentali si adattino particolarmente bene alla curva teorica.
 
 \paragraph{Rappresentazione della funzione di verosimiglianza}
 Per calcolare la funzione di verosimiglianza del tasso di conteggio per i tre diversi intervalli temporali $\Delta t_1= \SI{1}{s}$, $\Delta t_2= \SI{4}{s}$, $\Delta t_3= \SI{600}{s}$, combiniamo le $n$ misure di conteggio moltiplicando la densità  di probabilità del tasso di conteggio $r$ di ogni singola misura, ottenuta applicando il procedimento bayesiano. La funzione cercata sarà quindi, a meno di fattori moltiplicativi di normalizzazione:
@@ -235,9 +235,9 @@ Sovrapponiamo dunque al grafico, in figura~\ref{fig:0conteggi}, delle frazioni d
 ove come probabilità  $p$ scegliamo la frequenza relativa dei casi con $0$ conteggi, ed $N$ è pari a $50$. Riportiamo tale incertezza come barre di errore nel grafico prima citato.
 
 Per quanto riguarda invece la seconda frazione, essa corrisponde alla distribuzione del tempo di attesa per il secondo conteggio, ossia alla probabilità  di osservare $0$ o $1$ conteggio nell'intervallo di tempo $\Delta t$. La funzione che descrive questa probabilità  è
-\[
+\begin{equation}\label{eq:frazione}
 G(\Delta t) = e^{-\frac{\Delta t}{\tau}} + \frac{\Delta t}{\tau} e^{-\frac{\Delta t}{\tau}}.
-\]
+\end{equation}
 Riportiamo anche in questo caso i valori ottenuti nel grafico di figura~\ref{fig:0+1conteggi}, sovrapponendo l'andamento atteso descritto dalla funzione $G(\Delta t)$, utilizzando come \emph{rate} la medesima utilizzata precedentemente, e ricordando la relazione $\tau = 1 / R$. Le incertezze sono state calcolate con la stessa equazione~\ref{eq:errorbarsgeiger}, utilizzando ancora come probabilità  $p$ la frequenza relativa dei casi con $0$ e con $1$ conteggio, derivante dal fatto che l'errore sia ancora di tipo binomiale, considerando come \emph{successo} il numero di conteggi pari a $0$ o $1$. Anche in questo caso l'incertezza è rappresentata con le barre di errore.
 
 Notiamo che entro le barre di incertezza le nostre misure sono compatibili con la distribuzione teorica prevista per i tempi di attesa. Calcoliamo dunque il chi quadro per quantificare tale compatibilità , utilizzando nel primo caso l'equazione
@@ -250,7 +250,7 @@ Allo stesso modo, nel caso di $0+1$ conteggi utilizziamo l'equazione
 \[
 \chi^2 = \sum_{i = 1}^4 \frac{\big(f_{0+1}(\Delta t_i) - Np_i\big)^2}{Np_i(1-p_i)} = \sum_{i = 1}^4 \frac{\left(f_{0+1}(\Delta t_i) - N\cdot e^{-r_{\text{best}}\Delta t_i}(1+r_{\text{best}}\Delta t)\right)^2}{Ne^{-r_{\text{best}}\Delta t_i}(1+r_{\text{best}}\Delta t)\big(1-e^{-r_{\text{best}}\Delta t_i}(1+r_{\text{best}}\Delta t)\big)}
 \]
-e ricaviamo $\chi^2 = 4.51$.
+e ricaviamo $\chi^2 = 4.51$. Considerando (per quanto già detto sopra) un numero di gradi di libertà pari a $\nu = 4$ concludiamo che entrambe le frazioni sono compatibili con il modello descritto da (\ref{eq:frazione}).
 
 \begin{table}[ht]
 \caption{Frazione di $0$ e di $0+1$ conteggi negli intervalli tra $1$ e \SI{4}{s}}
