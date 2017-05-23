@@ -213,9 +213,14 @@ Dove $n$ è il numero di osservazioni di ciascun gruppo e $x_i$ sono i conteggi d
 I grafici \ref{fig:verosimiglianza1sec}, \ref{fig:verosimiglianza4sec}, \ref{fig:verosimiglianza600sec} rappresentano le funzioni di verosimiglianza, non normalizzate, rispettivamente per gli intervalli temporali $\Delta t_1= \SI{1}{s}$, $\Delta t_2= \SI{4}{s}$ e $\Delta t_3= \SI{600}{s}$. Notiamo che i punti di massimo di tali funzioni sono vicini tra di loro e la sovrapposizione delle tre funzioni di verosimiglianza è significativa, indicando che le tre misure indipendenti sono tra di loro compatibili.
 Per quanto riguarda la combinazione di tutte le misure, poiché stiamo studiando uno stesso fenomeno ma osservato in diversi intervalli temporali, la funzione, a meno di fattori moltiplicativi è data da: 
 \begin{equation}\label{eq:verosimiglianzatempidiversi}
-f(r|x) \propto r^{\sum_{i}x_i} \cdot e^{-r\sum_{i}T_i}
+f(r|X) \propto r^{\sum_{i}x_i} \cdot e^{-r\sum_{i}T_i},
 \end{equation}
-La macro fornita come esempio non gestisce correttamente tale calcolo, dovendo calcolare esplicitamente funzioni esponenziali con argomenti molto grandi. Il grafico \ref{fig:verosimiglianzacombinata} è ottenuto quindi modificando la macro di esempio per calcolare la funzione $g(x)=-\mathrm{ln}(f(r|x))$, che è più facilmente calcolabile dal calcolatore. Il valore più probabile che nella rappresentazione grafica precedente corrisponde con il massimo nella funzione, in questo caso corrisponde al minimo. Tale valore, che corrisponde a circa $1.05$, è compatibile con la nostra stima di $r_\mathrm{best}$.
+dove con $X$ indichiamo l'insieme dei dati sperimentali relativi ai conteggi.
+Poiché tale funzione risulta assumere valori non distinguibili da $0$ dal calcolatore, si riporta nel grafico di figura \ref{fig:verosimiglianzacombinata}, a meno di fattori di normalizzazione, il logaritmo naturale della funzione di verosimiglianza, 
+\[
+\log\big(f(r\vert X)\big) \propto 1022\log(r) - 1000r.
+\]
+Secondo il criterio di massima verosimiglianza otteniamo che il punto di massimo della funzione precedente corrisponde alla nostra stima di $r_\text{best}$, ossia $r_\text{best} = 1.02 \pm 0.03$.
 
 
 \paragraph{Frazione di 0 e 0+1 conteggi} 
@@ -519,7 +524,7 @@ A titolo di approfondimento, abbiamo scritto un programma in \emph{C}, riportato
 \begin{figure}
 \caption{Funzione di verosimiglianza per $\Delta T = \SI{4}{s}$}
 \label{fig:verosimiglianza4sec}
-\includegraphics[scale=0.5]{verosimiglainza4sec_nuovo.pdf}
+\includegraphics[scale=0.5]{verosimiglianza4sec_nuovo.pdf}
 \centering
 \end{figure}
 
@@ -534,7 +539,7 @@ A titolo di approfondimento, abbiamo scritto un programma in \emph{C}, riportato
 \caption{Funzione di verosimiglianza della combinazione delle misure}
 \label{fig:verosimiglianzacombinata}
 \centering
-\includegraphics[scale=0.5]{verosimiglianza_comb.eps}
+\includegraphics[scale=0.8]{verosimiglianza_comb.eps}
 \end{figure}
 
 %===============CONTEGGI INTEGRALI
